@@ -85,7 +85,7 @@ async function roll(interaction) {
         content: [
             `*${getExplanation(quantity, interaction.user)}*`,
             '',
-            `[${parseRolls(result, bladesSuccess)}] - ** ${result.total} ** `,
+            `[${parseRolls(result, bladesSuccess)}] => ** ${result.total} ** `,
             '',
             getSuccessString(bladesSuccess)
         ].join('\n')
