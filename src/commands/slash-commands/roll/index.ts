@@ -11,11 +11,11 @@ const generateRollResult = (quantity: number) => {
       {
         drop: isZero
           ? {
-              highest: 1
-            }
+            highest: 1
+          }
           : {
-              lowest: quantity - 1
-            }
+            lowest: quantity - 1
+          }
       }
     ]
   })
@@ -116,7 +116,7 @@ export async function roll(interaction: ChatInputCommandInteraction) {
     content: [
       `*${getExplanation(quantity, interaction.user)}*`,
       '',
-      `[${parseRolls(result, bladesSuccess)}] - ** ${result.total} ** `,
+      `[${parseRolls(result, bladesSuccess)}] => ** ${result.total} ** `,
       '',
       getSuccessString(bladesSuccess)
     ].join('\n')

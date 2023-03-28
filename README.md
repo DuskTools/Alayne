@@ -13,7 +13,6 @@
 - Locally, create a copy of `.env.example` named `.env`, then fill in the values
   - `TOKEN` is the bot token you made above
   - `APP_ID` is the `application_id` from the developer portal
-  - `GUILD_ID` is the ID of the DIscord server you installed ERWin on
 - `$ yarn deploy` will assign the commands to your server.
 - `$ yarn start` will kick off the server. So long as this command stays up, `ERWin` is live!
 
