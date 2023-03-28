@@ -13,8 +13,8 @@
 - Locally, create a copy of `.env.example` named `.env`, then fill in the values
   - `TOKEN` is the bot token you made above
   - `APP_ID` is the `application_id` from the developer portal
-- `$ yarn deploy` will assign the commands to your server.
-- `$ yarn start` will kick off the server. So long as this command stays up, `ERWin` is live!
+- `$ npm run deploy` will assign the commands to your server.
+- `$ npm run start` will kick off the server. So long as this command stays up, The bot is live!
 
 ## Usage
 
