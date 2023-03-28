@@ -1,15 +1,18 @@
-import {
-  REST,
-  SlashCommandBuilder,
-  Routes,
-} from 'discord.js'
+import { REST, SlashCommandBuilder, Routes } from 'discord.js'
 import { config } from 'dotenv'
 config()
 
 const roll = new SlashCommandBuilder()
   .setName('roll')
   .setDescription('Roll a number of dice in the Blades in the Dark system')
-  .addIntegerOption((option) => option.setName('dice').setDescription('The number of dice to roll'))
+  .addIntegerOption((option) =>
+    option
+      .setName('dice_pool')
+      .setDescription('The number of dice to roll')
+      .setMinValue(0)
+      .setMaxValue(10)
+      .setRequired(true)
+  )
 
 const commands = [roll].map((command) => command.toJSON())
 
@@ -18,11 +21,7 @@ const rest = new REST({ version: '10' }).setToken(
 )
 
 rest
-  .put(
-    Routes.applicationGuildCommands(
-      process.env.APP_ID || 'NO_APP_ID',
-      process.env.GUILD_ID || 'NO_GUILD'
-    ),
-    { body: commands }
-  )
+  .put(Routes.applicationCommands(process.env.APP_ID || 'NO_APP_ID'), {
+    body: commands
+  })
   .catch(console.error)

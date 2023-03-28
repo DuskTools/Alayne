@@ -1,5 +1,5 @@
 import { Client } from 'discord.js'
-import { roll } from './activate'
+import { roll } from './roll'
 
 export function slashCommands(client: Client) {
   client.on('interactionCreate', async (interaction) => {
