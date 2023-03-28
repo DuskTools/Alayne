@@ -32,7 +32,9 @@
   },
   "lint-staged": {
     "*": [
-      "prettier --write"
+      "prettier --write",
+      "yarn build",
+      "git add dist"
     ],
     "*.ts": [
       "eslint --fix"
