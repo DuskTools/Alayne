@@ -2,7 +2,7 @@
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "deploy": "ts-node src/deploy-commands.ts",
-    "build": "tsc -p .",
+    "build": "rm -rf ./dist/ & tsc -p .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --check",
@@ -32,9 +32,7 @@
   },
   "lint-staged": {
     "*": [
-      "prettier --write",
-      "yarn build",
-      "git add dist"
+      "prettier --write"
     ],
     "*.ts": [
       "eslint --fix"
