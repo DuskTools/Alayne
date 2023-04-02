@@ -19,3 +19,7 @@
 ## Usage
 
 - use `/roll n` to roll `n` number of 6-sided dice. Powered by [`randsum`](https://github.com/alxjrvs/randsum)
+
+## Special Thanks
+
+- [Giana](https://twitter.com/_doglizard) for help with the dice images!
