@@ -46,7 +46,7 @@ const getSuccessString = (type) => {
 };
 const getBladesRollType = (result, quantity) => {
     if (result.total === 6) {
-        const isCritical = result.rollParameters.initialRolls.filter((roll) => roll === 6).length >=
+        const isCritical = result.initialRolls.filter((roll) => roll === 6).length >=
             2;
         if (isCritical && quantity > 0) {
             return 'critical';
@@ -59,7 +59,7 @@ const getBladesRollType = (result, quantity) => {
     return 'failure';
 };
 const parseRolls = (result, bladesSuccess) => {
-    return result.rollParameters.initialRolls
+    return result.initialRolls
         .map((roll, index, array) => {
         const isCritical = bladesSuccess === 'critical';
         const firstInstaceOfRoll = array.indexOf(roll) === index;
