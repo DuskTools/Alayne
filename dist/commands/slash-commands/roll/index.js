@@ -46,8 +46,7 @@ const getSuccessString = (type) => {
 };
 const getBladesRollType = (result, quantity) => {
     if (result.total === 6) {
-        const isCritical = result.initialRolls.filter((roll) => roll === 6).length >=
-            2;
+        const isCritical = result.initialRolls.filter((roll) => roll === 6).length >= 2;
         if (isCritical && quantity > 0) {
             return 'critical';
         }

@@ -12,11 +12,11 @@ const generateRollResult = (quantity: number) => {
       {
         drop: isZero
           ? {
-            highest: 1
-          }
+              highest: 1
+            }
           : {
-            lowest: quantity - 1
-          }
+              lowest: quantity - 1
+            }
       }
     ]
   })
@@ -54,8 +54,7 @@ const getBladesRollType = (
 ): BladesRollType => {
   if (result.total === 6) {
     const isCritical =
-      result.initialRolls.filter((roll) => roll === 6).length >=
-      2
+      result.initialRolls.filter((roll) => roll === 6).length >= 2
     if (isCritical && quantity > 0) {
       return 'critical'
     }
