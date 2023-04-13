@@ -2,8 +2,10 @@ import { Client } from 'discord.js'
 import { roll } from './roll'
 import { clock } from './clock'
 import { findClocks } from './clock/findClocks'
+import { handleClockButtons } from './clock/handleClockButtons'
 
 export function slashCommands(client: Client) {
+  handleClockButtons(client)
   client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return
 
@@ -19,7 +21,11 @@ export function slashCommands(client: Client) {
 
       const embeds = clocks.map((clock) => clock.embeds[0])
 
-      interaction.editReply({ embeds })
+      if (embeds.length > 0) {
+        interaction.editReply({ embeds })
+      } else {
+        interaction.editReply({ content: 'No clocks found!' })
+      }
     }
 
     if (commandName === 'clock') {

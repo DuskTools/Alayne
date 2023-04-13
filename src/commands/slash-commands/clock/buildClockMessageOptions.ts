@@ -5,6 +5,8 @@ import {
   EmbedBuilder
 } from 'discord.js'
 import { RunningClockFooter } from './constants'
+import { clockImage } from './clockImage'
+import { getColor } from './getColor'
 
 export const buildClockMessageOptions = (
   name: string,
@@ -14,6 +16,8 @@ export const buildClockMessageOptions = (
 ) => {
   const embed = new EmbedBuilder()
     .setTitle(name)
+    .setThumbnail(clockImage(completeSegments, segments))
+    .setColor(getColor(completeSegments, segments))
     .setFooter({ text: footerText })
     .addFields({ name: '\u200B', value: '\u200B' })
     .addFields([
