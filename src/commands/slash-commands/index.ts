@@ -1,6 +1,7 @@
 import { Client } from 'discord.js'
 import { roll } from './roll'
 import { clock } from './clock'
+import { findClocks } from './clock/findClocks'
 
 export function slashCommands(client: Client) {
   client.on('interactionCreate', async (interaction) => {
@@ -12,8 +13,17 @@ export function slashCommands(client: Client) {
       roll(interaction)
     }
 
+    if (commandName === 'clocks') {
+      await interaction.deferReply({ ephemeral: true })
+      const clocks = await findClocks(interaction)
+
+      const embeds = clocks.map((clock) => clock.embeds[0])
+
+      interaction.editReply({ embeds })
+    }
+
     if (commandName === 'clock') {
-      clock(interaction)
+      await clock(interaction)
     }
   })
 }

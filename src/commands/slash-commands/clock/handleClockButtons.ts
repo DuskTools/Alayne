@@ -2,8 +2,8 @@ import { Client, Events } from 'discord.js'
 import { buildClockMessageOptions } from './buildClockMessageOptions'
 import { extractClockInfoFromMessage } from './extractClockInfoFromMessage'
 
-export const handleClockButtons = (client: Client) => {
-  client.on(Events.InteractionCreate, (interaction) => {
+export const handleClockButtons = async (client: Client) => {
+  client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isButton()) return
 
     if (interaction.customId.startsWith('bitdclock')) {
@@ -15,7 +15,7 @@ export const handleClockButtons = (client: Client) => {
         const newProgress = progress + 1
 
         if (newProgress >= segments) {
-          interaction.message.edit(
+          await interaction.message.edit(
             buildClockMessageOptions(
               name,
               segments,
@@ -23,41 +23,40 @@ export const handleClockButtons = (client: Client) => {
               'A Completed Blades in the Darkscord clock'
             )
           )
-          interaction.message.unpin()
-          interaction.reply({
+          await interaction.message.unpin()
+          await interaction.reply({
             content: `"${name}" Clock has been Completed! - **${segments}/${segments}**`
           })
-          return
+        } else {
+          await interaction.message.edit(
+            buildClockMessageOptions(name, segments, newProgress)
+          )
+          await interaction.reply({
+            content: `${interaction.user} Incremeneted the "${name}" Clock - **${newProgress}/${segments}**`
+          })
         }
-
-        interaction.message.edit(
-          buildClockMessageOptions(name, segments, newProgress)
-        )
-        interaction.reply({
-          content: `${interaction.user} Incremeneted the "${name}" Clock - **${newProgress}/${segments}**`
-        })
       }
 
       if (interaction.customId.startsWith('bitdclock--decrement')) {
         const newProgress = progress - 1
 
         if (newProgress < 0) {
-          interaction.reply({
+          await interaction.reply({
             content: `"${name}" Clock Cannot be reduced below 0`,
             ephemeral: true
           })
-          return
+        } else {
+          await interaction.message.edit(
+            buildClockMessageOptions(name, segments, newProgress)
+          )
+          await interaction.reply({
+            content: `"${name}" Clock Decremented - **${newProgress}/${segments}**`
+          })
         }
-        interaction.message.edit(
-          buildClockMessageOptions(name, segments, newProgress)
-        )
-        interaction.reply({
-          content: `"${name}" Clock Decremented - **${newProgress}/${segments}**`
-        })
       }
 
       if (interaction.customId.startsWith('bitdclock--stop')) {
-        interaction.message.edit(
+        await interaction.message.edit(
           buildClockMessageOptions(
             name,
             segments,
@@ -65,8 +64,10 @@ export const handleClockButtons = (client: Client) => {
             'A Stopped Blades in the Darkcord Clock'
           )
         )
-        interaction.message.unpin()
-        interaction.reply({ content: `"${name}" Clock has been Stopped!` })
+        await interaction.message.unpin()
+        await interaction.reply({
+          content: `"${name}" Clock has been Stopped!`
+        })
       }
     }
   })

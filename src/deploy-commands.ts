@@ -14,6 +14,10 @@ const roll = new SlashCommandBuilder()
       .setRequired(true)
   )
 
+const clocks = new SlashCommandBuilder()
+  .setName('clocks')
+  .setDescription('Show all running clocks')
+
 const clock = new SlashCommandBuilder()
   .setName('clock')
   .setDescription('Add a running clock')
@@ -34,7 +38,7 @@ const clock = new SlashCommandBuilder()
       .setRequired(true)
   )
 
-const commands = [roll, clock].map((command) => command.toJSON())
+const commands = [roll, clock, clocks].map((command) => command.toJSON())
 
 const rest = new REST({ version: '10' }).setToken(
   process.env.TOKEN || 'NO_TOKEN'
