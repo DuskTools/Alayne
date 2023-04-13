@@ -14,7 +14,27 @@ const roll = new SlashCommandBuilder()
       .setRequired(true)
   )
 
-const commands = [roll].map((command) => command.toJSON())
+const clock = new SlashCommandBuilder()
+  .setName('clock')
+  .setDescription('Add a running clock')
+  .addStringOption((option) =>
+    option
+      .setName('name')
+      .setDescription('The name of the clock')
+      .setRequired(true)
+  )
+  .addIntegerOption((option) =>
+    option
+      .setName('segments')
+      .setMinValue(4)
+      .setMaxValue(12)
+      .setDescription(
+        'the maximum number of segments on the clock (4, 6, 8, or 12'
+      )
+      .setRequired(true)
+  )
+
+const commands = [roll, clock].map((command) => command.toJSON())
 
 const rest = new REST({ version: '10' }).setToken(
   process.env.TOKEN || 'NO_TOKEN'

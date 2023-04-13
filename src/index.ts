@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits, Partials } from 'discord.js'
 import { config } from 'dotenv'
 import { slashCommands } from './commands/slash-commands'
+import { handleClockButtons } from './commands/slash-commands/clock/handleClockButtons'
 
 config()
 
@@ -18,5 +19,6 @@ client.once('ready', () => {
 })
 
 slashCommands(client)
+handleClockButtons(client)
 
 client.login(process.env.TOKEN)
