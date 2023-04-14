@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleClockButtons = void 0;
 const discord_js_1 = require("discord.js");
-const buildClockMessageOptions_1 = require("../clock/buildClockMessageOptions");
-const extractClockInfoFromEmbed_1 = require("../clock/extractClockInfoFromEmbed");
+const buildClockMessageOptions_1 = require("../utils/buildClockMessageOptions");
+const extractClockInfoFromEmbed_1 = require("../utils/extractClockInfoFromEmbed");
 const clockNameLink = (name, link) => `[${name}](${link}) clock`;
 const handleClockButtons = async (client) => {
     client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {

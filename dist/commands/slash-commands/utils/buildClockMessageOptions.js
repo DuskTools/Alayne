@@ -2,9 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildClockMessageOptions = void 0;
 const discord_js_1 = require("discord.js");
-const constants_1 = require("./constants");
-const clockImage_1 = require("./clockImage");
-const getColor_1 = require("./getColor");
+const constants_1 = require("../clock/constants");
+const discord_js_2 = require("discord.js");
+const clockImage = (progress, segment) => `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`;
+const getColor = (progress, segment) => {
+    const ratio = progress / segment;
+    switch (true) {
+        case ratio < 0.3333:
+            return discord_js_2.Colors.Green;
+        case ratio < 0.6666:
+            return discord_js_2.Colors.Yellow;
+        case ratio < 1:
+            return discord_js_2.Colors.Red;
+        default:
+            return discord_js_2.Colors.DarkRed;
+    }
+};
 const buildClockMessageOptions = ({ name, segments, progress = 0, footerText = constants_1.RunningClockFooter, link }) => {
     const fields = [
         {
@@ -20,8 +33,8 @@ const buildClockMessageOptions = ({ name, segments, progress = 0, footerText = c
     }
     const embed = new discord_js_1.EmbedBuilder()
         .setTitle(name)
-        .setThumbnail((0, clockImage_1.clockImage)(progress, segments))
-        .setColor((0, getColor_1.getColor)(progress, segments))
+        .setThumbnail(clockImage(progress, segments))
+        .setColor(getColor(progress, segments))
         .setFooter({ text: footerText })
         .addFields(fields);
     const showStop = footerText === constants_1.RunningClockFooter;

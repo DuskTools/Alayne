@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.clock = void 0;
-const buildClockMessageOptions_1 = require("./buildClockMessageOptions");
+const buildClockMessageOptions_1 = require("../utils/buildClockMessageOptions");
 const findClocks_1 = require("../utils/findClocks");
 async function clock(interaction) {
     await interaction.deferReply({ ephemeral: true });
