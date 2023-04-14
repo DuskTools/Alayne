@@ -10,8 +10,7 @@ export const clocks = async (interaction: ChatInputCommandInteraction) => {
   const embeds = clocks.map((clock) => {
     const embed = clock.embeds[0]
     const options = extractClockInfoFromEmbed(embed)
-    const link = clock.url
-    return buildClockMessageOptions({ ...options, link }).embeds[0]
+    return buildClockMessageOptions({ ...options, link: clock.url }).embeds[0]
   })
 
   if (embeds.length > 0) {
