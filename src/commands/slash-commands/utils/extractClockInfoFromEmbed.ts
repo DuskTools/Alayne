@@ -1,6 +1,7 @@
 import { Embed } from 'discord.js'
+import { ClockOptions } from '../clock/types'
 
-export const extractClockInfoFromEmbed = (embed: Embed) => {
+export const extractClockInfoFromEmbed = (embed: Embed): ClockOptions => {
   const name = String(embed.title)
   const totalProgress = embed.fields.find(
     ({ name }) => name === 'Progress'

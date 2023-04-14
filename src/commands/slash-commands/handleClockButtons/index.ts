@@ -1,6 +1,6 @@
 import { Client, Events } from 'discord.js'
-import { buildClockMessageOptions } from '../clock/buildClockMessageOptions'
-import { extractClockInfoFromEmbed } from '../clock/extractClockInfoFromEmbed'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
+import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed'
 
 const clockNameLink = (name: string, link: string) => `[${name}](${link}) clock`
 export const handleClockButtons = async (client: Client) => {

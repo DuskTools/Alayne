@@ -5,16 +5,26 @@ import {
   ButtonStyle,
   EmbedBuilder
 } from 'discord.js'
-import { RunningClockFooter, StoppedClockFooter } from './constants'
-import { clockImage } from './clockImage'
-import { getColor } from './getColor'
+import { RunningClockFooter, StoppedClockFooter } from '../clock/constants'
+import { ClockOptions } from '../clock/types'
+import { Colors } from 'discord.js'
 
-type ClockOptions = {
-  name: string
-  segments: number
-  progress?: number
-  footerText?: string
-  link?: string
+const clockImage = (progress: number, segment: number) =>
+  `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`
+
+const getColor = (progress: number, segment: number) => {
+  const ratio = progress / segment
+
+  switch (true) {
+    case ratio < 0.3333:
+      return Colors.Green
+    case ratio < 0.6666:
+      return Colors.Yellow
+    case ratio < 1:
+      return Colors.Red
+    default:
+      return Colors.DarkRed
+  }
 }
 
 export const buildClockMessageOptions = ({

@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction } from 'discord.js'
 import { findClocks } from '../utils/findClocks'
-import { extractClockInfoFromEmbed } from '../clock/extractClockInfoFromEmbed'
-import { buildClockMessageOptions } from '../clock/buildClockMessageOptions'
+import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
 
 export const clocks = async (interaction: ChatInputCommandInteraction) => {
   await interaction.deferReply({ ephemeral: true })

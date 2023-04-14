@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction } from 'discord.js'
-import { buildClockMessageOptions } from './buildClockMessageOptions'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
 import { findClocks } from '../utils/findClocks'
 
 export async function clock(interaction: ChatInputCommandInteraction) {
