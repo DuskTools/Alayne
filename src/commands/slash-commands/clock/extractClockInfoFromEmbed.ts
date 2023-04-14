@@ -1,8 +1,8 @@
-import { Message } from 'discord.js'
+import { Embed } from 'discord.js'
 
-export const extractClockInfoFromMessage = (message: Message<boolean>) => {
-  const name = String(message.embeds[0].title)
-  const totalProgress = message.embeds[0].fields.find(
+export const extractClockInfoFromEmbed = (embed: Embed) => {
+  const name = String(embed.title)
+  const totalProgress = embed.fields.find(
     ({ name }) => name === 'Progress'
   )?.value
   if (!totalProgress) {

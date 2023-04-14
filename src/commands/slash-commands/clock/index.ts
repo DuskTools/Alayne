@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction } from 'discord.js'
 import { buildClockMessageOptions } from './buildClockMessageOptions'
-import { findClocks } from './findClocks'
+import { findClocks } from '../utils/findClocks'
 
 export async function clock(interaction: ChatInputCommandInteraction) {
   await interaction.deferReply({ ephemeral: true })
@@ -21,10 +21,9 @@ export async function clock(interaction: ChatInputCommandInteraction) {
         content: `A Clock named ${name} already exists!`
       })
     } else {
-      const message = await interaction.channel?.send(
-        buildClockMessageOptions(name, segments)
+      await interaction.channel?.send(
+        buildClockMessageOptions({ name, segments })
       )
-      message?.pin()
       await interaction.editReply({
         content: `Created Clock "${name}"`
       })

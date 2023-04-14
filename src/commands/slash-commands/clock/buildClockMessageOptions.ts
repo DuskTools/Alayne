@@ -1,4 +1,5 @@
 import {
+  APIEmbedField,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -8,26 +9,44 @@ import { RunningClockFooter, StoppedClockFooter } from './constants'
 import { clockImage } from './clockImage'
 import { getColor } from './getColor'
 
-export const buildClockMessageOptions = (
-  name: string,
-  segments: number,
-  completeSegments = 0,
-  footerText = RunningClockFooter
-) => {
+type ClockOptions = {
+  name: string
+  segments: number
+  progress?: number
+  footerText?: string
+  link?: string
+}
+
+export const buildClockMessageOptions = ({
+  name,
+  segments,
+  progress = 0,
+  footerText = RunningClockFooter,
+  link
+}: ClockOptions) => {
+  const fields: APIEmbedField[] = [
+    {
+      name: 'Progress',
+      value: `${progress}/${segments}`
+    }
+  ]
+  if (link) {
+    fields.push({
+      name: ' ',
+      value: `[See Clock](${link})`
+    })
+  }
+
   const embed = new EmbedBuilder()
     .setTitle(name)
-    .setThumbnail(clockImage(completeSegments, segments))
-    .setColor(getColor(completeSegments, segments))
+    .setThumbnail(clockImage(progress, segments))
+    .setColor(getColor(progress, segments))
     .setFooter({ text: footerText })
-    .addFields({
-      name: 'Progress',
-      value: `${completeSegments}/${segments}`
-    })
+    .addFields(fields)
 
   const showStop = footerText === RunningClockFooter
-  const showDecrement =
-    showStop && completeSegments > 0 && completeSegments <= segments
-  const showIncrement = showStop && completeSegments < segments
+  const showDecrement = showStop && progress > 0 && progress <= segments
+  const showIncrement = showStop && progress < segments
   const showStart = footerText === StoppedClockFooter
 
   const buttons = [
