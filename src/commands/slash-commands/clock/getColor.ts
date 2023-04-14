@@ -1,16 +1,16 @@
+import { Colors } from 'discord.js'
+
 export const getColor = (progress: number, segment: number) => {
   const ratio = progress / segment
 
   switch (true) {
-    case ratio < 0.25:
-      return 0x000000
-    case ratio < 0.5:
-      return 0x00ff00
-    case ratio < 0.75:
-      return 0xcaffca
+    case ratio < 0.3333:
+      return Colors.Green
+    case ratio < 0.6666:
+      return Colors.Yellow
     case ratio < 1:
-      return 0xff0000
+      return Colors.Red
     default:
-      return 0x000000
+      return Colors.DarkRed
   }
 }

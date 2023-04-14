@@ -1,5 +1,5 @@
 import { EmbedBuilder } from '@discordjs/builders'
-import { ChatInputCommandInteraction, User } from 'discord.js'
+import { ChatInputCommandInteraction, Colors, User } from 'discord.js'
 import { RollResult, roll as randsum } from 'randsum'
 
 const generateRollResult = (quantity: number) => {
@@ -92,13 +92,13 @@ const getExplanation = (quantity: number, user: User): string[] => {
 const color = (type: BladesRollType): number => {
   switch (type) {
     case 'critical':
-      return 0xffd700
+      return Colors.Gold
     case 'success':
-      return 0x00ff00
+      return Colors.Green
     case 'partial':
-      return 0xcaffca
+      return Colors.Yellow
     case 'failure':
-      return 0xff0000
+      return Colors.Red
   }
 }
 

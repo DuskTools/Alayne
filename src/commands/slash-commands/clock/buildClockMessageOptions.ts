@@ -4,7 +4,7 @@ import {
   ButtonStyle,
   EmbedBuilder
 } from 'discord.js'
-import { RunningClockFooter } from './constants'
+import { RunningClockFooter, StoppedClockFooter } from './constants'
 import { clockImage } from './clockImage'
 import { getColor } from './getColor'
 
@@ -19,37 +19,37 @@ export const buildClockMessageOptions = (
     .setThumbnail(clockImage(completeSegments, segments))
     .setColor(getColor(completeSegments, segments))
     .setFooter({ text: footerText })
-    .addFields({ name: '\u200B', value: '\u200B' })
-    .addFields([
-      {
-        name: 'Progress',
-        value: completeSegments.toString()
-      },
-      {
-        name: 'Segments',
-        value: segments.toString()
-      }
-    ])
+    .addFields({
+      name: 'Progress',
+      value: `${completeSegments}/${segments}`
+    })
 
   const showStop = footerText === RunningClockFooter
-  const showDecrement = showStop && completeSegments > 0
+  const showDecrement =
+    showStop && completeSegments > 0 && completeSegments <= segments
   const showIncrement = showStop && completeSegments < segments
+  const showStart = footerText === StoppedClockFooter
 
   const buttons = [
     showIncrement &&
       new ButtonBuilder()
         .setCustomId(`bitdclock--increment`)
-        .setLabel('Up Tick')
+        .setLabel('+')
         .setStyle(ButtonStyle.Primary),
     showDecrement &&
       new ButtonBuilder()
         .setCustomId(`bitdclock--decrement`)
-        .setLabel('Down Tick')
+        .setLabel('-')
         .setStyle(ButtonStyle.Secondary),
+    showStart &&
+      new ButtonBuilder()
+        .setCustomId(`bitdclock--start`)
+        .setLabel('Restart')
+        .setStyle(ButtonStyle.Primary),
     showStop &&
       new ButtonBuilder()
         .setCustomId(`bitdclock--stop`)
-        .setLabel('Stop Clock')
+        .setLabel('Stop')
         .setStyle(ButtonStyle.Danger)
   ].filter((button) => button !== false) as ButtonBuilder[]
 

@@ -1,6 +1,6 @@
 import { Client, Events } from 'discord.js'
-import { buildClockMessageOptions } from './buildClockMessageOptions'
-import { extractClockInfoFromMessage } from './extractClockInfoFromMessage'
+import { buildClockMessageOptions } from '../slash-commands/clock/buildClockMessageOptions'
+import { extractClockInfoFromMessage } from '../slash-commands/clock/extractClockInfoFromMessage'
 
 export const handleClockButtons = async (client: Client) => {
   client.on(Events.InteractionCreate, async (interaction) => {
@@ -25,14 +25,14 @@ export const handleClockButtons = async (client: Client) => {
           )
           await interaction.message.unpin()
           await interaction.reply({
-            content: `"${name}" Clock has been Completed! - **${segments}/${segments}**`
+            content: `"${name}" clock completed - **${segments}/${segments}**`
           })
         } else {
           await interaction.message.edit(
             buildClockMessageOptions(name, segments, newProgress)
           )
           await interaction.reply({
-            content: `${interaction.user} Incremeneted the "${name}" Clock - **${newProgress}/${segments}**`
+            content: `"${name}" clock ticked down: **${newProgress}/${segments}**`
           })
         }
       }
@@ -50,7 +50,7 @@ export const handleClockButtons = async (client: Client) => {
             buildClockMessageOptions(name, segments, newProgress)
           )
           await interaction.reply({
-            content: `"${name}" Clock Decremented - **${newProgress}/${segments}**`
+            content: `"${name}" clock ticked up: **${newProgress}/${segments}**`
           })
         }
       }
@@ -66,7 +66,17 @@ export const handleClockButtons = async (client: Client) => {
         )
         await interaction.message.unpin()
         await interaction.reply({
-          content: `"${name}" Clock has been Stopped!`
+          content: `"${name}" clock **Stopped**`
+        })
+      }
+
+      if (interaction.customId.startsWith('bitdclock--start')) {
+        await interaction.message.edit(
+          buildClockMessageOptions(name, segments, progress)
+        )
+        await interaction.message.pin()
+        await interaction.reply({
+          content: `"${name}" clock **Restarted**`
         })
       }
     }
