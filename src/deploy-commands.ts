@@ -39,6 +39,7 @@ const clock = new SlashCommandBuilder()
   )
 
 const commands = [roll, clock, clocks].map((command) => command.toJSON())
+// const commands: never[] = []
 
 const rest = new REST({ version: '10' }).setToken(
   process.env.TOKEN || 'NO_TOKEN'

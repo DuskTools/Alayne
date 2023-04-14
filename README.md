@@ -20,6 +20,10 @@
 
 - use `/roll n` to roll `n` number of 6-sided dice. Powered by [`randsum`](https://github.com/alxjrvs/randsum)
 
+## Install
+
+`https://discord.com/api/oauth2/authorize?client_id=1026293303584497704&permissions=277025482752&scope=bot`
+
 ## Special Thanks
 
 - [Giana](https://twitter.com/_doglizard) for help with the dice images!

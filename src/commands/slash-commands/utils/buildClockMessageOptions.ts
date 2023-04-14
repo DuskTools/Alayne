@@ -43,7 +43,7 @@ export const buildClockMessageOptions = ({
   if (link) {
     fields.push({
       name: ' ',
-      value: `[See Clock](${link})`
+      value: `[Jump To Clock](${link})`
     })
   }
 
