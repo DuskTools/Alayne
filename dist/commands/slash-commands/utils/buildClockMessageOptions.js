@@ -28,7 +28,7 @@ const buildClockMessageOptions = ({ name, segments, progress = 0, footerText = c
     if (link) {
         fields.push({
             name: ' ',
-            value: `[See Clock](${link})`
+            value: `[Jump To Clock](${link})`
         });
     }
     const embed = new discord_js_1.EmbedBuilder()
