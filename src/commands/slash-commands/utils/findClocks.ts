@@ -1,13 +1,26 @@
-import { ChatInputCommandInteraction, Collection, Message } from 'discord.js'
+import { ChatInputCommandInteraction, Message } from 'discord.js'
 import { RunningClockFooter } from '../clock/constants'
 
+const messageArr = Array.from({ length: 5 }, () => ({}))
 export const findClocks = async (interaction: ChatInputCommandInteraction) => {
-  const messageList: Collection<string, Message<boolean>> | undefined =
-    await interaction.channel?.messages.fetch({ cache: true, limit: 100 })
+  const messageList = await messageArr.reduce<Promise<Message<boolean>[]>>(
+    async (accumulator, _current, index) => {
+      const resolvedAccumulator = await accumulator
 
-  if (messageList == undefined) {
-    return new Collection<string, Message<boolean>>()
-  }
+      if (index > 0 && resolvedAccumulator.length < 100 * index) {
+        return resolvedAccumulator
+      }
+
+      const lastMessage = resolvedAccumulator[resolvedAccumulator.length - 1]
+      const messageList = await interaction.channel?.messages.fetch({
+        cache: true,
+        limit: 100,
+        before: lastMessage?.id
+      })
+      return [...resolvedAccumulator, ...(messageList?.values() || [])]
+    },
+    Promise.resolve([]) as Promise<Message<boolean>[]>
+  )
 
   return messageList.filter(
     (message) =>
