@@ -3,5 +3,7 @@ export type ClockOptions = {
   segments: number
   progress?: number
   footerText?: string
+  discordGuildId: string
   link?: string
+  active: boolean
 }

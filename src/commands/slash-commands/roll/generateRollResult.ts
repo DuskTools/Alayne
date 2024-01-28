@@ -1,9 +1,9 @@
-import { roll as randsum } from 'randsum'
+import { roll } from 'randsum'
 
 export const generateRollResult = (quantity: number) => {
   const sides = 6
   const isZero = quantity === 0
-  return randsum({
+  return roll({
     sides,
     quantity: isZero ? 2 : quantity,
     modifiers: [

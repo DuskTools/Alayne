@@ -1,17 +1,19 @@
 import { EmbedBuilder } from '@discordjs/builders'
 import { ChatInputCommandInteraction } from 'discord.js'
-import { generateRollResult } from './generateRollResult'
-import { getColor } from './getColor'
-import { getExplanation } from './getExplanation'
-import { parseRolls } from './parseRolls'
-import { getThumbnail } from './getThumbail'
-import { getBladesRollType } from './getBladesRollType'
-import { getSuccessString } from './getSuccessString'
+import { generateRollResult } from './generateRollResult.js'
+import { getColor } from './getColor.js'
+import { getExplanation } from './getExplanation.js'
+import { parseRolls } from './parseRolls.js'
+import { getThumbnail } from './getThumbail.js'
+import { getBladesRollType } from './getBladesRollType.js'
+import { getSuccessString } from './getSuccessString.js'
 
-const buildEmbed = (interaction: ChatInputCommandInteraction): EmbedBuilder => {
+const buildEmbed = async (
+  interaction: ChatInputCommandInteraction
+): Promise<EmbedBuilder> => {
   const diceArg = interaction.options.getInteger('dice_pool')
   const quantity = diceArg === 0 ? 0 : diceArg || 1
-  const result = generateRollResult(quantity)
+  const result = await generateRollResult(quantity)
   const bladesSuccess = getBladesRollType(result, quantity)
   const [explanationTitle, explanationValue] = getExplanation(
     quantity,
@@ -38,7 +40,7 @@ const buildEmbed = (interaction: ChatInputCommandInteraction): EmbedBuilder => {
 }
 
 export async function roll(interaction: ChatInputCommandInteraction) {
-  const embed = buildEmbed(interaction)
+  const embed = await buildEmbed(interaction)
 
   interaction.reply({ embeds: [embed] })
 }

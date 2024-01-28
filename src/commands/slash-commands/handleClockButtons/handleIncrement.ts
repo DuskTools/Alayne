@@ -1,10 +1,12 @@
 import { ButtonInteraction } from 'discord.js'
-import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
-import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed'
-import { clockNameLink } from './clockNameLink'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
+import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed.js'
+import { clockNameLink } from './clockNameLink.js'
+import ClockService from '../../../services/ClockService.js'
 
 export const handleIncrement = async (interaction: ButtonInteraction) => {
   const link = interaction.message.url
+  const discordGuildId = interaction.guildId || ''
   const { name, segments, progress } = extractClockInfoFromEmbed(
     interaction.message.embeds[0]
   )
@@ -25,6 +27,12 @@ export const handleIncrement = async (interaction: ButtonInteraction) => {
         link
       )} completed - **${segments}/${segments}**`
     })
+    await ClockService.updateClock({
+      name,
+      discordGuildId,
+      progress: newProgress,
+      active: false
+    })
   } else {
     await interaction.message.edit(
       buildClockMessageOptions({
@@ -38,6 +46,12 @@ export const handleIncrement = async (interaction: ButtonInteraction) => {
         name,
         link
       )} ticked up: **${newProgress}/${segments}**`
+    })
+
+    await ClockService.updateClock({
+      name,
+      discordGuildId,
+      progress: newProgress
     })
   }
 }

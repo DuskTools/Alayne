@@ -18,19 +18,13 @@ const getColor = (progress, segment) => {
             return discord_js_2.Colors.DarkRed;
     }
 };
-const buildClockMessageOptions = ({ name, segments, progress = 0, footerText = constants_1.RunningClockFooter, link }) => {
+const buildClockMessageOptions = ({ name, segments, progress = 0, footerText = constants_1.RunningClockFooter }) => {
     const fields = [
         {
             name: 'Progress',
             value: `${progress}/${segments}`
         }
     ];
-    if (link) {
-        fields.push({
-            name: ' ',
-            value: `[Jump To Clock](${link})`
-        });
-    }
     const embed = new discord_js_1.EmbedBuilder()
         .setTitle(name)
         .setThumbnail(clockImage(progress, segments))

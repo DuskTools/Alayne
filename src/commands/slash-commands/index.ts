@@ -1,8 +1,8 @@
 import { Client } from 'discord.js'
-import { roll } from './roll'
-import { clock } from './clock'
-import { handleClockButtons } from './handleClockButtons'
-import { clocks } from './clocks'
+import { roll } from './roll/index.js'
+import { clock } from './clock/index.js'
+import { handleClockButtons } from './handleClockButtons/index.js'
+import { clocks } from './clocks/index.js'
 
 export function slashCommands(client: Client) {
   handleClockButtons(client)

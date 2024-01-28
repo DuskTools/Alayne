@@ -1,9 +1,11 @@
 import { ButtonInteraction } from 'discord.js'
-import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
-import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed'
-import { clockNameLink } from './clockNameLink'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
+import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed.js'
+import { clockNameLink } from './clockNameLink.js'
+import ClockService from '../../../services/ClockService.js'
 
 export const handleRestart = async (interaction: ButtonInteraction) => {
+  const discordGuildId = interaction.guildId || ''
   const link = interaction.message.url
   const { name, segments, progress } = extractClockInfoFromEmbed(
     interaction.message.embeds[0]
@@ -17,5 +19,11 @@ export const handleRestart = async (interaction: ButtonInteraction) => {
   )
   await interaction.reply({
     content: `${clockNameLink(name, link)} **Restarted**`
+  })
+
+  await ClockService.updateClock({
+    name,
+    discordGuildId,
+    active: true
   })
 }

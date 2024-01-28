@@ -1,16 +1,19 @@
 import { ChatInputCommandInteraction } from 'discord.js'
-import { findClocks } from '../utils/findClocks'
-import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed'
-import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
+import ClockService from '../../../services/ClockService.js'
 
 export const clocks = async (interaction: ChatInputCommandInteraction) => {
   await interaction.deferReply({ ephemeral: true })
-  const clocks = await findClocks(interaction)
 
-  const embeds = clocks.map((clock) => {
-    const embed = clock.embeds[0]
-    const options = extractClockInfoFromEmbed(embed)
-    return buildClockMessageOptions({ ...options, link: clock.url }).embeds[0]
+  if (interaction.guildId === null) {
+    await interaction.editReply({
+      content: `Cannot find guildId`
+    })
+  }
+  const clocks = await ClockService.getClocks(interaction.guildId || '')
+
+  const embeds = clocks.map((clockOptions) => {
+    return buildClockMessageOptions(clockOptions).embeds[0]
   })
 
   if (embeds.length > 0) {

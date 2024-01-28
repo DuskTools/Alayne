@@ -5,8 +5,8 @@ import {
   ButtonStyle,
   EmbedBuilder
 } from 'discord.js'
-import { RunningClockFooter, StoppedClockFooter } from '../clock/constants'
-import { ClockOptions } from '../clock/types'
+import { RunningClockFooter, StoppedClockFooter } from '../clock/constants.js'
+import { ClockOptions } from '../clock/types.js'
 import { Colors } from 'discord.js'
 
 const clockImage = (progress: number, segment: number) =>
@@ -33,13 +33,14 @@ export const buildClockMessageOptions = ({
   progress = 0,
   footerText = RunningClockFooter,
   link
-}: ClockOptions) => {
+}: Omit<ClockOptions, 'discordGuildId' | 'uid' | 'active'>) => {
   const fields: APIEmbedField[] = [
     {
       name: 'Progress',
       value: `${progress}/${segments}`
     }
   ]
+
   if (link) {
     fields.push({
       name: ' ',

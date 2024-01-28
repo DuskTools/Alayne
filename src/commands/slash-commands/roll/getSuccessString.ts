@@ -1,4 +1,4 @@
-import { BladesRollType } from './constants'
+import { BladesRollType } from './constants.js'
 
 export const getSuccessString = (type: BladesRollType): string[] => {
   const responseArray = []

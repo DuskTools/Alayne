@@ -1,7 +1,10 @@
 import { Embed } from 'discord.js'
-import { ClockOptions } from '../clock/types'
+import { ClockOptions } from '../clock/types.js'
 
-type ExtractedClockOptions = Omit<ClockOptions, 'progress'> & {
+type ExtractedClockOptions = Omit<
+  ClockOptions,
+  'progress' | 'discordGuildId' | 'uid' | 'active'
+> & {
   progress: number
 }
 export const extractClockInfoFromEmbed = (
