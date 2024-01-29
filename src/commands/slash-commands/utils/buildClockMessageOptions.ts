@@ -11,10 +11,12 @@ import { Colors } from 'discord.js'
 const clockImage = (progress: number, segment: number) =>
   `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`
 
-const getColor = (progress: number, segment: number) => {
+const getColor = (progress: number, segment: number, active: boolean) => {
   const ratio = progress / segment
 
   switch (true) {
+    case !active:
+      return Colors.Red
     case ratio < 0.3333:
       return Colors.Green
     case ratio < 0.6666:
@@ -51,12 +53,13 @@ export const buildClockMessageOptions = ({
   const embed = new EmbedBuilder()
     .setTitle(name)
     .setThumbnail(clockImage(progress, segments))
-    .setColor(getColor(progress, segments))
+    .setColor(getColor(progress, segments, active))
     .addFields(fields)
 
   const showStop = active
   const showDecrement = showStop && progress > 0 && progress <= segments
   const showIncrement = showStop && progress < segments
+  const showRestart = progress < segments && !active
 
   const buttons = [
     showIncrement &&
@@ -69,6 +72,11 @@ export const buildClockMessageOptions = ({
         .setCustomId(`bitdclock--decrement`)
         .setLabel('-')
         .setStyle(ButtonStyle.Secondary),
+    showRestart &&
+      new ButtonBuilder()
+        .setCustomId(`bitdclock--start`)
+        .setLabel('Restart')
+        .setStyle(ButtonStyle.Primary),
     showStop &&
       new ButtonBuilder()
         .setCustomId(`bitdclock--stop`)
