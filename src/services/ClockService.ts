@@ -10,10 +10,10 @@ import {
 import ServerService from './ServerService.js'
 
 async function create({ discordGuildId, ...restOptions }: ClockOptions) {
-  await addDoc(
+  return await addDoc(
     collection(
       (
-        await ServerService.findOrSaveServer(discordGuildId)
+        await ServerService.findOrCreate(discordGuildId)
       ).ref,
       'clocks'
     ),
@@ -27,7 +27,7 @@ async function create({ discordGuildId, ...restOptions }: ClockOptions) {
 
 async function getClocks(discordGuildId: string) {
   const clocksRef = collection(
-    (await ServerService.findOrSaveServer(discordGuildId)).ref,
+    (await ServerService.findOrCreate(discordGuildId)).ref,
     'clocks'
   )
   const q = query(clocksRef, where('active', '==', true))
@@ -40,7 +40,7 @@ async function getClock({
   name
 }: Pick<ClockOptions, 'name' | 'discordGuildId'>) {
   const clocksRef = collection(
-    (await ServerService.findOrSaveServer(discordGuildId)).ref,
+    (await ServerService.findOrCreate(discordGuildId)).ref,
     'clocks'
   )
   const q = query(clocksRef, where('name', '==', name))
@@ -55,7 +55,7 @@ async function updateClock({
   active?: boolean
 }) {
   const clockRef = (await getClock({ discordGuildId, ...restOptions })).ref
-  await updateDoc(clockRef, restOptions)
+  return await updateDoc(clockRef, restOptions)
 }
 
 export default {
