@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getThumbnail = void 0;
-const getThumbnail = (total, type) => {
+export const getThumbnail = (total, type) => {
     const root = 'https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/d6/';
     switch (total) {
         case 1:
@@ -22,4 +19,3 @@ const getThumbnail = (total, type) => {
     }
     throw new Error('Invalid total');
 };
-exports.getThumbnail = getThumbnail;

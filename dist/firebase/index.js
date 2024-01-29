@@ -1,18 +1,16 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.store = exports.app = void 0;
-const app_1 = require("firebase/app");
-const firestore_1 = require("firebase/firestore");
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { config } from 'dotenv';
+config();
 const firebaseConfig = {
-    apiKey: 'AIzaSyDO8X7xXaMb7Im34sBhd-io7R1jzygINIA',
-    authDomain: 'bladesinthedarkscord.firebaseapp.com',
-    projectId: 'bladesinthedarkscord',
-    storageBucket: 'bladesinthedarkscord.appspot.com',
-    messagingSenderId: '619775083218',
-    appId: '1:619775083218:web:aee122b640ba0bb47c630b',
-    measurementId: 'G-HVEMFN32WY'
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
-const app = (0, app_1.initializeApp)(firebaseConfig);
-exports.app = app;
-const store = (0, firestore_1.getFirestore)(app);
-exports.store = store;
+const app = initializeApp(firebaseConfig);
+const store = getFirestore(app);
+export { app, store };

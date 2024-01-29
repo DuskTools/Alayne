@@ -1,25 +1,28 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const firestore_1 = require("firebase/firestore");
-const firebase_1 = require("../firebase");
-async function saveClock(options) {
-    try {
-        const docRef = await (0, firestore_1.addDoc)((0, firestore_1.collection)(firebase_1.store, 'clocks'), {
-            ...options,
-            progress: 0
-        });
-        console.log('Document written with ID: ', docRef.id);
-    }
-    catch (e) {
-        console.error('Error adding document: ', e);
-    }
+import { collection, addDoc, getDocs, query, where, updateDoc } from 'firebase/firestore';
+import ServerService from './ServerService.js';
+async function saveClock({ discordGuildId, ...restOptions }) {
+    await addDoc(collection((await ServerService.findOrSaveServer(discordGuildId)).ref, 'clocks'), {
+        ...restOptions,
+        discordGuildId,
+        progress: 0
+    });
 }
-async function getClocks() {
-    const querySnapshot = await (0, firestore_1.getDocs)((0, firestore_1.collection)(firebase_1.store, 'clocks'));
-    const clocks = querySnapshot.docs.map((doc) => doc.data());
+async function getClocks(discordGuildId) {
+    const clocksRef = collection((await ServerService.findOrSaveServer(discordGuildId)).ref, 'clocks');
+    const q = query(clocksRef, where('active', '==', true));
+    const querySnapshot = await getDocs(q);
+    const clocks = querySnapshot.docs.map((doc) => doc.data()) || [];
     return clocks;
 }
-exports.default = {
+async function updateClock({ discordGuildId, ...restOptions }) {
+    const clocksRef = collection((await ServerService.findOrSaveServer(discordGuildId)).ref, 'clocks');
+    const q = query(clocksRef, where('name', '==', restOptions.name));
+    const querySnapshot = await getDocs(q);
+    const clockRef = querySnapshot.docs[0].ref;
+    await updateDoc(clockRef, restOptions);
+}
+export default {
+    updateClock,
     saveClock,
     getClocks
 };

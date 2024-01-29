@@ -1,20 +1,23 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleStop = void 0;
-const buildClockMessageOptions_1 = require("../utils/buildClockMessageOptions");
-const extractClockInfoFromEmbed_1 = require("../utils/extractClockInfoFromEmbed");
-const clockNameLink_1 = require("./clockNameLink");
-const handleStop = async (interaction) => {
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js';
+import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed.js';
+import { clockNameLink } from './clockNameLink.js';
+import ClockService from '../../../services/ClockService.js';
+export const handleStop = async (interaction) => {
     const link = interaction.message.url;
-    const { name, segments, progress } = (0, extractClockInfoFromEmbed_1.extractClockInfoFromEmbed)(interaction.message.embeds[0]);
-    await interaction.message.edit((0, buildClockMessageOptions_1.buildClockMessageOptions)({
+    const discordGuildId = interaction.guildId || '';
+    const { name, segments, progress } = extractClockInfoFromEmbed(interaction.message.embeds[0]);
+    await interaction.message.edit(buildClockMessageOptions({
         name,
         segments,
         progress: progress,
         footerText: 'A Stopped Blades in the Darkcord Clock'
     }));
     await interaction.reply({
-        content: `${(0, clockNameLink_1.clockNameLink)(name, link)} **Stopped**`
+        content: `${clockNameLink(name, link)} **Stopped**`
+    });
+    await ClockService.updateClock({
+        name,
+        discordGuildId,
+        active: false
     });
 };
-exports.handleStop = handleStop;

@@ -1,19 +1,22 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleRestart = void 0;
-const buildClockMessageOptions_1 = require("../utils/buildClockMessageOptions");
-const extractClockInfoFromEmbed_1 = require("../utils/extractClockInfoFromEmbed");
-const clockNameLink_1 = require("./clockNameLink");
-const handleRestart = async (interaction) => {
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js';
+import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed.js';
+import { clockNameLink } from './clockNameLink.js';
+import ClockService from '../../../services/ClockService.js';
+export const handleRestart = async (interaction) => {
+    const discordGuildId = interaction.guildId || '';
     const link = interaction.message.url;
-    const { name, segments, progress } = (0, extractClockInfoFromEmbed_1.extractClockInfoFromEmbed)(interaction.message.embeds[0]);
-    await interaction.message.edit((0, buildClockMessageOptions_1.buildClockMessageOptions)({
+    const { name, segments, progress } = extractClockInfoFromEmbed(interaction.message.embeds[0]);
+    await interaction.message.edit(buildClockMessageOptions({
         name,
         segments,
         progress: progress
     }));
     await interaction.reply({
-        content: `${(0, clockNameLink_1.clockNameLink)(name, link)} **Restarted**`
+        content: `${clockNameLink(name, link)} **Restarted**`
+    });
+    await ClockService.updateClock({
+        name,
+        discordGuildId,
+        active: true
     });
 };
-exports.handleRestart = handleRestart;

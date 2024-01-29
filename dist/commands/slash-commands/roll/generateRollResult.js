@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateRollResult = void 0;
-const generateRollResult = async (quantity) => {
-    const { roll } = await import('randsum');
+import { roll } from 'randsum';
+export const generateRollResult = (quantity) => {
     const sides = 6;
     const isZero = quantity === 0;
     return roll({
@@ -21,4 +18,3 @@ const generateRollResult = async (quantity) => {
         ]
     });
 };
-exports.generateRollResult = generateRollResult;
