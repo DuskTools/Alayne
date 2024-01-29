@@ -26,7 +26,7 @@ export const handleIncrement = async (interaction) => {
         const newClockOptions = {
             ...clockOptions,
             progress: newProgress,
-            active: newProgress >= clockOptions.segments
+            active: true
         };
         await interaction.message.edit(buildClockMessageOptions(newClockOptions));
         await interaction.reply({
