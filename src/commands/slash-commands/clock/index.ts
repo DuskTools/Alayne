@@ -44,10 +44,8 @@ export async function clock(interaction: ChatInputCommandInteraction) {
     content: `Created Clock "${name}"`
   })
 
-  const ref = await ClockService.create({
+  await ClockService.create({
     ...newClockOptions,
     link: clockMessage?.url || ''
   })
-
-  clockMessage?.edit(buildClockMessageOptions(newClockOptions, ref.id))
 }

@@ -28,17 +28,14 @@ const getColor = (progress: number, segment: number, active: boolean) => {
   }
 }
 
-export const buildClockMessageOptions = (
-  {
-    name,
-    segments,
-    progress = 0,
-    active,
-    link
-  }: Omit<ClockOptions, 'discordGuildId' | 'link'> &
-    Partial<Pick<ClockOptions, 'link'>>,
-  id?: string
-) => {
+export const buildClockMessageOptions = ({
+  name,
+  segments,
+  progress = 0,
+  active,
+  link
+}: Omit<ClockOptions, 'discordGuildId' | 'link'> &
+  Partial<Pick<ClockOptions, 'link'>>) => {
   const fields: APIEmbedField[] = [
     {
       name: 'Progress',
@@ -58,10 +55,6 @@ export const buildClockMessageOptions = (
     .setThumbnail(clockImage(progress, segments))
     .setColor(getColor(progress, segments, active))
     .addFields(fields)
-
-  if (id) {
-    embed.setFooter({ text: id })
-  }
 
   const showStop = active
   const showDecrement = showStop && progress > 0 && progress <= segments
