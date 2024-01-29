@@ -20,9 +20,7 @@ export async function clock(interaction: ChatInputCommandInteraction) {
     })
   }
 
-  const clockList = (await ClockService.getClocks(discordGuildId)).map((ref) =>
-    ref.data()
-  )
+  const clockList = await ClockService.getClocks(discordGuildId)
   const clockExists =
     clockList.find((message) => message.name === name) !== undefined
   if (clockExists) {
@@ -31,17 +29,16 @@ export async function clock(interaction: ChatInputCommandInteraction) {
     })
   }
   const clockMessage = await interaction.channel?.send(
-    buildClockMessageOptions({ name, segments, active: true, progress: 0 })
+    buildClockMessageOptions({ name, segments })
   )
   await interaction.editReply({
     content: `Created Clock "${name}"`
   })
 
-  await ClockService.create({
+  await ClockService.saveClock({
     name,
     segments,
-    progress: 0,
-    link: clockMessage?.url || '',
+    link: clockMessage?.url,
     discordGuildId,
     active: true
   })

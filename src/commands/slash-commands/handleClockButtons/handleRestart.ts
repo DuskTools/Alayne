@@ -4,27 +4,26 @@ import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed.js
 import { clockNameLink } from './clockNameLink.js'
 import ClockService from '../../../services/ClockService.js'
 
-export const handleStop = async (interaction: ButtonInteraction) => {
-  const link = interaction.message.url
+export const handleRestart = async (interaction: ButtonInteraction) => {
   const discordGuildId = interaction.guildId || ''
+  const link = interaction.message.url
   const { name, segments, progress } = extractClockInfoFromEmbed(
     interaction.message.embeds[0]
   )
-
   await interaction.message.edit(
     buildClockMessageOptions({
       name,
       segments,
-      progress: progress,
-      footerText: 'A Stopped Blades in the Darkcord Clock'
+      progress: progress
     })
   )
   await interaction.reply({
-    content: `${clockNameLink(name, link)} **Stopped**`
+    content: `${clockNameLink(name, link)} **Restarted**`
   })
+
   await ClockService.updateClock({
     name,
     discordGuildId,
-    active: false
+    active: true
   })
 }

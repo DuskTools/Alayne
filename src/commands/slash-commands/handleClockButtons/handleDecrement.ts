@@ -1,39 +1,42 @@
 import { ButtonInteraction } from 'discord.js'
 import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
-import { extractClockInfoFromButtonInteraction } from '../utils/extractClockInfoFromButtonInteraction.js'
+import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed.js'
 import { clockNameLink } from './clockNameLink.js'
 import ClockService from '../../../services/ClockService.js'
 
 export const handleDecrement = async (interaction: ButtonInteraction) => {
   const link = interaction.message.url
   const discordGuildId = interaction.guildId || ''
-  const clockOptions = await extractClockInfoFromButtonInteraction(interaction)
+  const { name, segments, progress } = extractClockInfoFromEmbed(
+    interaction.message.embeds[0]
+  )
 
-  const newProgress = clockOptions.progress - 1
+  const newProgress = progress - 1
 
   if (newProgress < 0) {
     await interaction.reply({
-      content: `${clockNameLink(
-        clockOptions.name,
-        link
-      )} cannot be reduced below 0`,
+      content: `${clockNameLink(name, link)} cannot be reduced below 0`,
       ephemeral: true
     })
   } else {
-    const newClockOptions = {
-      ...clockOptions,
-      progress: newProgress
-    }
-    await interaction.message.edit(buildClockMessageOptions(newClockOptions))
+    await interaction.message.edit(
+      buildClockMessageOptions({
+        name,
+        segments,
+        progress: newProgress
+      })
+    )
     await interaction.reply({
       content: `${clockNameLink(
-        newClockOptions.name,
+        name,
         link
-      )} ticked down: **${newProgress}/${newClockOptions.segments}**`
+      )} ticked down: **${newProgress}/${segments}**`
     })
     await ClockService.updateClock({
-      ...newClockOptions,
-      discordGuildId
+      name,
+      discordGuildId,
+      progress: newProgress,
+      active: newProgress > 0
     })
   }
 }

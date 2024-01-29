@@ -2,6 +2,7 @@ import { Client, Events } from 'discord.js'
 import { handleIncrement } from './handleIncrement.js'
 import { handleDecrement } from './handleDecrement.js'
 import { handleStop } from './handleStop.js'
+import { handleRestart } from './handleRestart.js'
 
 export const handleClockButtons = async (client: Client) => {
   client.on(Events.InteractionCreate, async (interaction) => {
@@ -17,6 +18,10 @@ export const handleClockButtons = async (client: Client) => {
 
     if (interaction.customId.startsWith('bitdclock--stop')) {
       handleStop(interaction)
+    }
+
+    if (interaction.customId.startsWith('bitdclock--start')) {
+      handleRestart(interaction)
     }
   })
 }

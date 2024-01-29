@@ -5,6 +5,7 @@ import {
   ButtonStyle,
   EmbedBuilder
 } from 'discord.js'
+import { RunningClockFooter, StoppedClockFooter } from '../clock/constants.js'
 import { ClockOptions } from '../clock/types.js'
 import { Colors } from 'discord.js'
 
@@ -30,10 +31,9 @@ export const buildClockMessageOptions = ({
   name,
   segments,
   progress = 0,
-  active,
+  footerText = RunningClockFooter,
   link
-}: Omit<ClockOptions, 'discordGuildId' | 'link'> &
-  Partial<Pick<ClockOptions, 'link'>>) => {
+}: Omit<ClockOptions, 'discordGuildId' | 'uid' | 'active'>) => {
   const fields: APIEmbedField[] = [
     {
       name: 'Progress',
@@ -52,11 +52,13 @@ export const buildClockMessageOptions = ({
     .setTitle(name)
     .setThumbnail(clockImage(progress, segments))
     .setColor(getColor(progress, segments))
+    .setFooter({ text: footerText })
     .addFields(fields)
 
-  const showStop = active
+  const showStop = footerText === RunningClockFooter
   const showDecrement = showStop && progress > 0 && progress <= segments
   const showIncrement = showStop && progress < segments
+  const showStart = footerText === StoppedClockFooter
 
   const buttons = [
     showIncrement &&
@@ -69,6 +71,11 @@ export const buildClockMessageOptions = ({
         .setCustomId(`bitdclock--decrement`)
         .setLabel('-')
         .setStyle(ButtonStyle.Secondary),
+    showStart &&
+      new ButtonBuilder()
+        .setCustomId(`bitdclock--start`)
+        .setLabel('Restart')
+        .setStyle(ButtonStyle.Primary),
     showStop &&
       new ButtonBuilder()
         .setCustomId(`bitdclock--stop`)

@@ -1,48 +1,57 @@
 import { ButtonInteraction } from 'discord.js'
 import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
-import { extractClockInfoFromButtonInteraction } from '../utils/extractClockInfoFromButtonInteraction.js'
+import { extractClockInfoFromEmbed } from '../utils/extractClockInfoFromEmbed.js'
 import { clockNameLink } from './clockNameLink.js'
 import ClockService from '../../../services/ClockService.js'
 
 export const handleIncrement = async (interaction: ButtonInteraction) => {
   const link = interaction.message.url
   const discordGuildId = interaction.guildId || ''
-  const clockOptions = await extractClockInfoFromButtonInteraction(interaction)
-  const newProgress = clockOptions.progress + 1
+  const { name, segments, progress } = extractClockInfoFromEmbed(
+    interaction.message.embeds[0]
+  )
+  const newProgress = progress + 1
 
-  if (newProgress >= clockOptions.segments) {
-    const newClockOptions = {
-      ...clockOptions,
-      progress: clockOptions.segments,
-      active: false
-    }
-    await interaction.message.edit(buildClockMessageOptions(newClockOptions))
-    await interaction.reply({
-      content: `${clockNameLink(newClockOptions.name, link)} completed - **${
-        newClockOptions.segments
-      }/${newClockOptions.segments}**`
-    })
-    await ClockService.updateClock({
-      ...newClockOptions,
-      discordGuildId
-    })
-  } else {
-    const newClockOptions = {
-      ...clockOptions,
-      progress: newProgress,
-      active: newProgress >= clockOptions.segments
-    }
-    await interaction.message.edit(buildClockMessageOptions(newClockOptions))
+  if (newProgress >= segments) {
+    await interaction.message.edit(
+      buildClockMessageOptions({
+        name,
+        segments,
+        progress: segments,
+        footerText: 'A Completed Blades in the Darkscord clock'
+      })
+    )
     await interaction.reply({
       content: `${clockNameLink(
-        newClockOptions.name,
+        name,
         link
-      )} ticked up: **${newProgress}/${newClockOptions.segments}**`
+      )} completed - **${segments}/${segments}**`
+    })
+    await ClockService.updateClock({
+      name,
+      discordGuildId,
+      progress: newProgress,
+      active: false
+    })
+  } else {
+    await interaction.message.edit(
+      buildClockMessageOptions({
+        name,
+        segments,
+        progress: newProgress
+      })
+    )
+    await interaction.reply({
+      content: `${clockNameLink(
+        name,
+        link
+      )} ticked up: **${newProgress}/${segments}**`
     })
 
     await ClockService.updateClock({
-      ...newClockOptions,
-      discordGuildId
+      name,
+      discordGuildId,
+      progress: newProgress
     })
   }
 }
