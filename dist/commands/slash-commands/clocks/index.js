@@ -7,7 +7,7 @@ export const clocks = async (interaction) => {
             content: `Cannot find guildId`
         });
     }
-    const clocks = await ClockService.getClocks(interaction.guildId || '');
+    const clocks = (await ClockService.getClocks(interaction.guildId || '')).map((ref) => ref.data());
     const embeds = clocks.map((clockOptions) => {
         return buildClockMessageOptions(clockOptions).embeds[0];
     });

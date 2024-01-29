@@ -1,5 +1,4 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
-import { RunningClockFooter, StoppedClockFooter } from '../clock/constants.js';
 import { Colors } from 'discord.js';
 const clockImage = (progress, segment) => `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`;
 const getColor = (progress, segment) => {
@@ -15,7 +14,7 @@ const getColor = (progress, segment) => {
             return Colors.DarkRed;
     }
 };
-export const buildClockMessageOptions = ({ name, segments, progress = 0, footerText = RunningClockFooter, link }) => {
+export const buildClockMessageOptions = ({ name, segments, progress = 0, active, link }) => {
     const fields = [
         {
             name: 'Progress',
@@ -32,12 +31,10 @@ export const buildClockMessageOptions = ({ name, segments, progress = 0, footerT
         .setTitle(name)
         .setThumbnail(clockImage(progress, segments))
         .setColor(getColor(progress, segments))
-        .setFooter({ text: footerText })
         .addFields(fields);
-    const showStop = footerText === RunningClockFooter;
+    const showStop = active;
     const showDecrement = showStop && progress > 0 && progress <= segments;
     const showIncrement = showStop && progress < segments;
-    const showStart = footerText === StoppedClockFooter;
     const buttons = [
         showIncrement &&
             new ButtonBuilder()
@@ -49,11 +46,6 @@ export const buildClockMessageOptions = ({ name, segments, progress = 0, footerT
                 .setCustomId(`bitdclock--decrement`)
                 .setLabel('-')
                 .setStyle(ButtonStyle.Secondary),
-        showStart &&
-            new ButtonBuilder()
-                .setCustomId(`bitdclock--start`)
-                .setLabel('Restart')
-                .setStyle(ButtonStyle.Primary),
         showStop &&
             new ButtonBuilder()
                 .setCustomId(`bitdclock--stop`)

@@ -15,21 +15,22 @@ export async function clock(interaction) {
             content: `Segments must be one of 4, 6, 8, or 12`
         });
     }
-    const clockList = await ClockService.getClocks(discordGuildId);
+    const clockList = (await ClockService.getClocks(discordGuildId)).map((ref) => ref.data());
     const clockExists = clockList.find((message) => message.name === name) !== undefined;
     if (clockExists) {
         return await interaction.editReply({
             content: `A Clock named ${name} already exists!`
         });
     }
-    const clockMessage = await interaction.channel?.send(buildClockMessageOptions({ name, segments }));
+    const clockMessage = await interaction.channel?.send(buildClockMessageOptions({ name, segments, active: true, progress: 0 }));
     await interaction.editReply({
         content: `Created Clock "${name}"`
     });
-    await ClockService.saveClock({
+    await ClockService.create({
         name,
         segments,
-        link: clockMessage?.url,
+        progress: 0,
+        link: clockMessage?.url || '',
         discordGuildId,
         active: true
     });
