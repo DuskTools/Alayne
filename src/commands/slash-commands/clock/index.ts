@@ -30,19 +30,24 @@ export async function clock(interaction: ChatInputCommandInteraction) {
       content: `A Clock named ${name} already exists!`
     })
   }
+  const newClockOptions = {
+    name,
+    segments,
+    active: true,
+    progress: 0,
+    discordGuildId
+  }
   const clockMessage = await interaction.channel?.send(
-    buildClockMessageOptions({ name, segments, active: true, progress: 0 })
+    buildClockMessageOptions(newClockOptions)
   )
   await interaction.editReply({
     content: `Created Clock "${name}"`
   })
 
-  await ClockService.create({
-    name,
-    segments,
-    progress: 0,
-    link: clockMessage?.url || '',
-    discordGuildId,
-    active: true
+  const ref = await ClockService.create({
+    ...newClockOptions,
+    link: clockMessage?.url || ''
   })
+
+  clockMessage?.edit(buildClockMessageOptions(newClockOptions, ref.id))
 }
