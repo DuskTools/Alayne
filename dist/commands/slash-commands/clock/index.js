@@ -22,16 +22,19 @@ export async function clock(interaction) {
             content: `A Clock named ${name} already exists!`
         });
     }
-    const clockMessage = await interaction.channel?.send(buildClockMessageOptions({ name, segments, active: true, progress: 0 }));
+    const newClockOptions = {
+        name,
+        segments,
+        active: true,
+        progress: 0,
+        discordGuildId
+    };
+    const clockMessage = await interaction.channel?.send(buildClockMessageOptions(newClockOptions));
     await interaction.editReply({
         content: `Created Clock "${name}"`
     });
     await ClockService.create({
-        name,
-        segments,
-        progress: 0,
-        link: clockMessage?.url || '',
-        discordGuildId,
-        active: true
+        ...newClockOptions,
+        link: clockMessage?.url || ''
     });
 }
