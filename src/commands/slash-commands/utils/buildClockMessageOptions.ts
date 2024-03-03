@@ -6,7 +6,7 @@ import {
   EmbedBuilder
 } from 'discord.js'
 import { Colors } from 'discord.js'
-import { Clock } from '../../../types'
+import { Clock } from '../../../types.js'
 
 const clockImage = (progress: number, segment: number) =>
   `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`

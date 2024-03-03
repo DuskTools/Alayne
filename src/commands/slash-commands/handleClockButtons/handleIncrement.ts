@@ -1,9 +1,9 @@
 import { ButtonInteraction } from 'discord.js'
-import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
-import { extractClockInfoFromButtonInteraction } from '../utils/extractClockInfoFromButtonInteraction'
-import { clockNameLink } from './clockNameLink'
-import ClockService from '../../../services/ClockService'
-import CampaignService from '../../../services/CampaignService'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
+import { extractClockInfoFromButtonInteraction } from '../utils/extractClockInfoFromButtonInteraction.js'
+import { clockNameLink } from './clockNameLink.js'
+import ClockService from '../../../services/ClockService.js'
+import CampaignService from '../../../services/CampaignService.js'
 
 export const handleIncrement = async (interaction: ButtonInteraction) => {
   const link = interaction.message.url

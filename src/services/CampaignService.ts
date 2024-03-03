@@ -1,4 +1,4 @@
-import supabase from '../supabase/index'
+import supabase from '../supabase/index.js'
 
 async function findOrCreateByDiscordId(discordGuildId: string) {
   const data = await findByDiscordId(discordGuildId)

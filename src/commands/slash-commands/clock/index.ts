@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction } from 'discord.js'
-import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
-import ClockService from '../../../services/ClockService'
-import CampaignService from '../../../services/CampaignService'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
+import ClockService from '../../../services/ClockService.js'
+import CampaignService from '../../../services/CampaignService.js'
 
 export async function clock(interaction: ChatInputCommandInteraction) {
   await interaction.deferReply({ ephemeral: true })

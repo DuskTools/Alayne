@@ -1,4 +1,4 @@
-import { Database } from './database.types'
+import { Database } from './database.types.js'
 
 
 export type ClockUpdateParams = Database['public']['Tables']['clocks']['Update']

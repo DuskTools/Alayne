@@ -1,6 +1,6 @@
 import { ButtonInteraction } from 'discord.js'
-import ClockService from '../../../services/ClockService'
-import CampaignService from '../../../services/CampaignService'
+import ClockService from '../../../services/ClockService.js'
+import CampaignService from '../../../services/CampaignService.js'
 
 export const extractClockInfoFromButtonInteraction = async (
   interaction: ButtonInteraction

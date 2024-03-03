@@ -9,7 +9,6 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:jest/recommended",
     "plugin:jest/style",
-
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -17,6 +16,13 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "jest"],
-  "rules": {}
+  "plugins": [
+    "@typescript-eslint",
+    "jest"
+  ],
+  "rules": {
+    "rules": {
+      "@typescript-eslint/no-non-null-assertion": "off"
+    }
+  }
 }

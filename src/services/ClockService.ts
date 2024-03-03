@@ -1,5 +1,5 @@
-import supabase from '../supabase'
-import { Clock, ClockCreateParams, ClockUpdateParams } from '../types'
+import supabase from '../supabase/index.js'
+import { Clock, ClockCreateParams, ClockUpdateParams } from '../types.js'
 
 async function create(clockParams: ClockCreateParams) {
   const { data, error } = await supabase
