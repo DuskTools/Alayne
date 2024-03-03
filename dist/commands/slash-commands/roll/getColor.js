@@ -1,13 +1,17 @@
-import { Colors } from 'discord.js';
-export const getColor = (type) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getColor = void 0;
+const discord_js_1 = require("discord.js");
+const getColor = (type) => {
     switch (type) {
         case 'critical':
-            return Colors.Gold;
+            return discord_js_1.Colors.Gold;
         case 'success':
-            return Colors.Green;
+            return discord_js_1.Colors.Green;
         case 'partial':
-            return Colors.Yellow;
+            return discord_js_1.Colors.Yellow;
         case 'failure':
-            return Colors.Red;
+            return discord_js_1.Colors.Red;
     }
 };
+exports.getColor = getColor;

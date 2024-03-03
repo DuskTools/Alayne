@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits, Partials } from 'discord.js'
 import { config } from 'dotenv'
-import { slashCommands } from './commands/slash-commands/index.js'
+import { slashCommands } from './commands/slash-commands/index'
 
 config()
 

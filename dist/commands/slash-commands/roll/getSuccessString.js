@@ -1,4 +1,7 @@
-export const getSuccessString = (type) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getSuccessString = void 0;
+const getSuccessString = (type) => {
     const responseArray = [];
     switch (type) {
         case 'critical':
@@ -20,3 +23,4 @@ export const getSuccessString = (type) => {
     }
     return responseArray;
 };
+exports.getSuccessString = getSuccessString;

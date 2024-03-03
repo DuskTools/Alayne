@@ -1,4 +1,4 @@
-import { BladesRollType } from './constants.js'
+import { BladesRollType } from './constants'
 
 export const getThumbnail = (total: number, type: BladesRollType): string => {
   const root =

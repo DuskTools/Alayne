@@ -1,22 +1,25 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
-import { Colors } from 'discord.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.buildClockMessageOptions = void 0;
+const discord_js_1 = require("discord.js");
+const discord_js_2 = require("discord.js");
 const clockImage = (progress, segment) => `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`;
 const getColor = (progress, segment, active) => {
     const ratio = progress / segment;
     switch (true) {
         case !active:
-            return Colors.Red;
+            return discord_js_2.Colors.Red;
         case ratio < 0.3333:
-            return Colors.Green;
+            return discord_js_2.Colors.Green;
         case ratio < 0.6666:
-            return Colors.Yellow;
+            return discord_js_2.Colors.Yellow;
         case ratio < 1:
-            return Colors.Red;
+            return discord_js_2.Colors.Red;
         default:
-            return Colors.DarkRed;
+            return discord_js_2.Colors.DarkRed;
     }
 };
-export const buildClockMessageOptions = ({ name, segments, progress = 0, active, link }) => {
+const buildClockMessageOptions = ({ name, segments, progress = 0, active, link }) => {
     const fields = [
         {
             name: 'Progress',
@@ -29,7 +32,7 @@ export const buildClockMessageOptions = ({ name, segments, progress = 0, active,
             value: `[Jump To Clock](${link})`
         });
     }
-    const embed = new EmbedBuilder()
+    const embed = new discord_js_1.EmbedBuilder()
         .setTitle(name)
         .setThumbnail(clockImage(progress, segments))
         .setColor(getColor(progress, segments, active))
@@ -40,29 +43,30 @@ export const buildClockMessageOptions = ({ name, segments, progress = 0, active,
     const showRestart = progress < segments && !active;
     const buttons = [
         showIncrement &&
-            new ButtonBuilder()
+            new discord_js_1.ButtonBuilder()
                 .setCustomId(`bitdclock--increment`)
                 .setLabel('+')
-                .setStyle(ButtonStyle.Primary),
+                .setStyle(discord_js_1.ButtonStyle.Primary),
         showDecrement &&
-            new ButtonBuilder()
+            new discord_js_1.ButtonBuilder()
                 .setCustomId(`bitdclock--decrement`)
                 .setLabel('-')
-                .setStyle(ButtonStyle.Secondary),
+                .setStyle(discord_js_1.ButtonStyle.Secondary),
         showRestart &&
-            new ButtonBuilder()
+            new discord_js_1.ButtonBuilder()
                 .setCustomId(`bitdclock--start`)
                 .setLabel('Restart')
-                .setStyle(ButtonStyle.Primary),
+                .setStyle(discord_js_1.ButtonStyle.Primary),
         showStop &&
-            new ButtonBuilder()
+            new discord_js_1.ButtonBuilder()
                 .setCustomId(`bitdclock--stop`)
                 .setLabel('Stop')
-                .setStyle(ButtonStyle.Danger)
+                .setStyle(discord_js_1.ButtonStyle.Danger)
     ].filter((button) => button !== false);
-    const components = new ActionRowBuilder().addComponents(buttons);
+    const components = new discord_js_1.ActionRowBuilder().addComponents(buttons);
     if (components.components.length > 0) {
         return { embeds: [embed], components: [components] };
     }
     return { embeds: [embed], components: [] };
 };
+exports.buildClockMessageOptions = buildClockMessageOptions;

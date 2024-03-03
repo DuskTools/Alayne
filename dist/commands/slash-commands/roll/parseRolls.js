@@ -1,4 +1,7 @@
-export const parseRolls = (result, bladesSuccess) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseRolls = void 0;
+const parseRolls = (result, bladesSuccess) => {
     return result.initialRolls
         .map((roll, index, array) => {
         const isCritical = bladesSuccess === 'critical';
@@ -9,3 +12,4 @@ export const parseRolls = (result, bladesSuccess) => {
     })
         .join(', ');
 };
+exports.parseRolls = parseRolls;

@@ -1,12 +1,12 @@
 import { EmbedBuilder } from '@discordjs/builders'
 import { ChatInputCommandInteraction } from 'discord.js'
-import { generateRollResult } from './generateRollResult.js'
-import { getColor } from './getColor.js'
-import { getExplanation } from './getExplanation.js'
-import { parseRolls } from './parseRolls.js'
-import { getThumbnail } from './getThumbail.js'
-import { getBladesRollType } from './getBladesRollType.js'
-import { getSuccessString } from './getSuccessString.js'
+import { getColor } from './getColor'
+import { getExplanation } from './getExplanation'
+import { parseRolls } from './parseRolls'
+import { getThumbnail } from './getThumbail'
+import { getBladesRollType } from './getBladesRollType'
+import { getSuccessString } from './getSuccessString'
+import { generateRollResult } from './generateRollResult'
 
 const buildEmbed = async (
   interaction: ChatInputCommandInteraction

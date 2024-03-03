@@ -1,5 +1,5 @@
 import { Colors } from 'discord.js'
-import { BladesRollType } from './constants.js'
+import { BladesRollType } from './constants'
 
 export const getColor = (type: BladesRollType): number => {
   switch (type) {

@@ -5,8 +5,8 @@ import {
   ButtonStyle,
   EmbedBuilder
 } from 'discord.js'
-import { ClockOptions } from '../clock/types.js'
 import { Colors } from 'discord.js'
+import { Clock } from '../../../types'
 
 const clockImage = (progress: number, segment: number) =>
   `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`
@@ -34,8 +34,8 @@ export const buildClockMessageOptions = ({
   progress = 0,
   active,
   link
-}: Omit<ClockOptions, 'discordGuildId' | 'link'> &
-  Partial<Pick<ClockOptions, 'link'>>) => {
+}: Omit<Clock, 'campaign_id' | 'link' | 'id' | 'created_at'> &
+  Partial<Pick<Clock, 'link'>>) => {
   const fields: APIEmbedField[] = [
     {
       name: 'Progress',
@@ -63,25 +63,25 @@ export const buildClockMessageOptions = ({
 
   const buttons = [
     showIncrement &&
-      new ButtonBuilder()
-        .setCustomId(`bitdclock--increment`)
-        .setLabel('+')
-        .setStyle(ButtonStyle.Primary),
+    new ButtonBuilder()
+      .setCustomId(`bitdclock--increment`)
+      .setLabel('+')
+      .setStyle(ButtonStyle.Primary),
     showDecrement &&
-      new ButtonBuilder()
-        .setCustomId(`bitdclock--decrement`)
-        .setLabel('-')
-        .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId(`bitdclock--decrement`)
+      .setLabel('-')
+      .setStyle(ButtonStyle.Secondary),
     showRestart &&
-      new ButtonBuilder()
-        .setCustomId(`bitdclock--start`)
-        .setLabel('Restart')
-        .setStyle(ButtonStyle.Primary),
+    new ButtonBuilder()
+      .setCustomId(`bitdclock--start`)
+      .setLabel('Restart')
+      .setStyle(ButtonStyle.Primary),
     showStop &&
-      new ButtonBuilder()
-        .setCustomId(`bitdclock--stop`)
-        .setLabel('Stop')
-        .setStyle(ButtonStyle.Danger)
+    new ButtonBuilder()
+      .setCustomId(`bitdclock--stop`)
+      .setLabel('Stop')
+      .setStyle(ButtonStyle.Danger)
   ].filter((button) => button !== false) as ButtonBuilder[]
 
   const components = new ActionRowBuilder<ButtonBuilder>().addComponents(

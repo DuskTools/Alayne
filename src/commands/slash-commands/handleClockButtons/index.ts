@@ -1,8 +1,8 @@
 import { Client, Events } from 'discord.js'
-import { handleIncrement } from './handleIncrement.js'
-import { handleDecrement } from './handleDecrement.js'
-import { handleStop } from './handleStop.js'
-import { handleRestart } from './handleRestart.js'
+import { handleIncrement } from './handleIncrement'
+import { handleDecrement } from './handleDecrement'
+import { handleStop } from './handleStop'
+import { handleRestart } from './handleRestart'
 
 export const handleClockButtons = async (client: Client) => {
   client.on(Events.InteractionCreate, async (interaction) => {

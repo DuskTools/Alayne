@@ -1,66 +1,73 @@
-import { ClockOptions } from '../commands/slash-commands/clock/types.js'
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  updateDoc
-} from 'firebase/firestore'
-import ServerService from './ServerService.js'
+import supabase from '../supabase'
+import { Clock, ClockCreateParams, ClockUpdateParams } from '../types'
 
-async function create({ discordGuildId, ...restOptions }: ClockOptions) {
-  return await addDoc(
-    collection(
-      (
-        await ServerService.findOrCreate(discordGuildId)
-      ).ref,
-      'clocks'
-    ),
-    {
-      ...restOptions,
-      discordGuildId,
-      progress: 0
-    }
-  )
+async function create(clockParams: ClockCreateParams) {
+  const { data, error } = await supabase
+    .from('clocks')
+    .insert(clockParams)
+    .select()
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
 }
 
-async function getClocks(discordGuildId: string) {
-  const clocksRef = collection(
-    (await ServerService.findOrCreate(discordGuildId)).ref,
-    'clocks'
-  )
-  const q = query(clocksRef, where('active', '==', true))
-  const querySnapshot = await getDocs(q)
-  return querySnapshot.docs
+async function getActiveClocks(campaign_id: string) {
+  const { data, error } = await supabase
+    .from('clocks')
+    .select()
+    .eq('campaign_id', campaign_id)
+    .eq('active', true)
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
 }
 
 async function getClock({
-  discordGuildId,
+  campaign_id,
   name
-}: Pick<ClockOptions, 'name' | 'discordGuildId'>) {
-  const clocksRef = collection(
-    (await ServerService.findOrCreate(discordGuildId)).ref,
-    'clocks'
-  )
-  const q = query(clocksRef, where('name', '==', name))
-  const querySnapshot = await getDocs(q)
-  return querySnapshot.docs[0]
+}: Pick<Clock, 'name' | 'campaign_id'>) {
+
+  const { data, error } = await supabase
+    .from('clocks')
+    .select()
+    .eq('campaign_id', campaign_id)
+    .eq('name', name)
+    .limit(1)
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
 }
 
-async function updateClock({
-  discordGuildId,
-  ...restOptions
-}: Pick<ClockOptions, 'name' | 'progress' | 'discordGuildId'> & {
-  active?: boolean
-}) {
-  const clockRef = (await getClock({ discordGuildId, ...restOptions })).ref
-  return await updateDoc(clockRef, restOptions)
+async function updateClock(options: ClockUpdateParams & Pick<Clock, 'name' | 'campaign_id'>) {
+  const { data, error } = await supabase
+    .from('clocks')
+    .update(options)
+    .eq('campaign_id', options.campaign_id)
+    .eq('name', options.name)
+    .select()
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
 }
 
 export default {
   updateClock,
   getClock,
   create,
-  getClocks
+  getActiveClocks
 }

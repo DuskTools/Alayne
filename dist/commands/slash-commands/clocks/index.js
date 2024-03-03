@@ -1,15 +1,21 @@
-import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js';
-import ClockService from '../../../services/ClockService.js';
-export const clocks = async (interaction) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.clocks = void 0;
+const tslib_1 = require("tslib");
+const buildClockMessageOptions_1 = require("../utils/buildClockMessageOptions");
+const ClockService_1 = tslib_1.__importDefault(require("../../../services/ClockService"));
+const CampaignService_1 = tslib_1.__importDefault(require("../../../services/CampaignService"));
+const clocks = async (interaction) => {
     await interaction.deferReply({ ephemeral: true });
     if (interaction.guildId === null) {
         await interaction.editReply({
             content: `Cannot find guildId`
         });
     }
-    const clocks = (await ClockService.getClocks(interaction.guildId || '')).map((ref) => ref.data());
+    const campaign = await CampaignService_1.default.findOrCreateByDiscordId(interaction.guildId);
+    const clocks = await ClockService_1.default.getActiveClocks(campaign.id);
     const embeds = clocks.map((clockOptions) => {
-        return buildClockMessageOptions(clockOptions).embeds[0];
+        return (0, buildClockMessageOptions_1.buildClockMessageOptions)(clockOptions).embeds[0];
     });
     if (embeds.length > 0) {
         interaction.editReply({ embeds });
@@ -18,3 +24,4 @@ export const clocks = async (interaction) => {
         interaction.editReply({ content: 'No clocks found!' });
     }
 };
+exports.clocks = clocks;

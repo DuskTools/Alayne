@@ -1,8 +1,9 @@
 import { ButtonInteraction } from 'discord.js'
-import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
-import { extractClockInfoFromButtonInteraction } from '../utils/extractClockInfoFromButtonInteraction.js'
-import { clockNameLink } from './clockNameLink.js'
-import ClockService from '../../../services/ClockService.js'
+import { buildClockMessageOptions } from '../utils/buildClockMessageOptions'
+import { extractClockInfoFromButtonInteraction } from '../utils/extractClockInfoFromButtonInteraction'
+import { clockNameLink } from './clockNameLink'
+import ClockService from '../../../services/ClockService'
+import CampaignService from '../../../services/CampaignService'
 
 export const handleStop = async (interaction: ButtonInteraction) => {
   const link = interaction.message.url
@@ -15,9 +16,10 @@ export const handleStop = async (interaction: ButtonInteraction) => {
   await interaction.reply({
     content: `${clockNameLink(clockOptions.name, link)} **Stopped**`
   })
+  const campaign = await CampaignService.findOrCreateByDiscordId(discordGuildId)
   await ClockService.updateClock({
     ...clockOptions,
-    discordGuildId,
+    campaign_id: campaign.id,
     active: false
   })
 }

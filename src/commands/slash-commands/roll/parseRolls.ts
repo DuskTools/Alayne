@@ -1,5 +1,5 @@
 import { RollResult } from 'randsum'
-import { BladesRollType } from './constants.js'
+import { BladesRollType } from './constants'
 
 export const parseRolls = (
   result: RollResult<number>,
