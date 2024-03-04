@@ -35,7 +35,7 @@ export async function clock(interaction: ChatInputCommandInteraction) {
     segments,
     active: true,
     progress: 0,
-    discordGuildId
+    campaign_id: campaign.id
   }
   const clockMessage = await interaction.channel?.send(
     buildClockMessageOptions(newClockOptions)
@@ -46,7 +46,6 @@ export async function clock(interaction: ChatInputCommandInteraction) {
 
   await ClockService.create({
     ...newClockOptions,
-    campaign_id: campaign.id,
     link: clockMessage?.url || ''
   })
 }

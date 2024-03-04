@@ -9,10 +9,11 @@ async function create(clockParams: ClockCreateParams) {
     .single()
 
   if (error) {
-    throw new Error(error.message)
+    console.log('Create clock error')
+    console.log(error.message)
   }
 
-  return data
+  return data!
 }
 
 async function getActiveClocks(campaign_id: string) {
@@ -23,17 +24,17 @@ async function getActiveClocks(campaign_id: string) {
     .eq('active', true)
 
   if (error) {
-    throw new Error(error.message)
+    console.log('get active clocks error')
+    console.log(error.message)
   }
 
-  return data
+  return data!
 }
 
 async function getClock({
   campaign_id,
   name
 }: Pick<Clock, 'name' | 'campaign_id'>) {
-
   const { data, error } = await supabase
     .from('clocks')
     .select()
@@ -43,13 +44,20 @@ async function getClock({
     .single()
 
   if (error) {
-    throw new Error(error.message)
+    console.log('get clock error')
+    console.log(error.message)
+  }
+
+  if (!data) {
+    throw new Error('No Clock found')
   }
 
   return data
 }
 
-async function updateClock(options: ClockUpdateParams & Pick<Clock, 'name' | 'campaign_id'>) {
+async function updateClock(
+  options: ClockUpdateParams & Pick<Clock, 'name' | 'campaign_id'>
+) {
   const { data, error } = await supabase
     .from('clocks')
     .update(options)
@@ -59,10 +67,11 @@ async function updateClock(options: ClockUpdateParams & Pick<Clock, 'name' | 'ca
     .single()
 
   if (error) {
-    throw new Error(error.message)
+    console.log('update clock error')
+    console.log(error.message)
   }
 
-  return data
+  return data!
 }
 
 export default {
