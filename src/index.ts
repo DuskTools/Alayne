@@ -19,4 +19,4 @@ client.once('ready', () => {
 
 slashCommands(client)
 
-client.login(process.env.TOKEN)
+client.login(process.env.DISCORD_TOKEN)

@@ -15,7 +15,6 @@
     "removeComments": true,
     "sourceMap": false
   },
-  "files": ["src/index.ts"],
   "include": ["./**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

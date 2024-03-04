@@ -42,11 +42,11 @@ const commands = [roll, clock, clocks].map((command) => command.toJSON())
 // const commands: never[] = []
 
 const rest = new REST({ version: '10' }).setToken(
-  process.env.TOKEN || 'NO_TOKEN'
+  process.env.DISCORD_TOKEN || 'NO_TOKEN'
 )
 
 rest
-  .put(Routes.applicationCommands(process.env.APP_ID || 'NO_APP_ID'), {
+  .put(Routes.applicationCommands(process.env.DISCORD_APP_ID || 'NO_APP_ID'), {
     body: commands
   })
   .catch(console.error)
