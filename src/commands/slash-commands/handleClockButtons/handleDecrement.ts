@@ -32,10 +32,12 @@ export const handleDecrement = async (interaction: ButtonInteraction) => {
         link
       )} ticked down: **${newProgress}/${newClockOptions.segments}**`
     })
-    const campaign = await CampaignService.findOrCreateByDiscordId(discordGuildId)
+    const campaign = await CampaignService.findOrCreateByDiscordId(
+      discordGuildId
+    )
     await ClockService.updateClock({
       ...newClockOptions,
-      campaign_id: campaign.id,
+      campaign_id: campaign.id
     })
   }
 }

@@ -63,25 +63,25 @@ export const buildClockMessageOptions = ({
 
   const buttons = [
     showIncrement &&
-    new ButtonBuilder()
-      .setCustomId(`bitdclock--increment`)
-      .setLabel('+')
-      .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId(`bitdclock--increment`)
+        .setLabel('+')
+        .setStyle(ButtonStyle.Primary),
     showDecrement &&
-    new ButtonBuilder()
-      .setCustomId(`bitdclock--decrement`)
-      .setLabel('-')
-      .setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder()
+        .setCustomId(`bitdclock--decrement`)
+        .setLabel('-')
+        .setStyle(ButtonStyle.Secondary),
     showRestart &&
-    new ButtonBuilder()
-      .setCustomId(`bitdclock--start`)
-      .setLabel('Restart')
-      .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId(`bitdclock--start`)
+        .setLabel('Restart')
+        .setStyle(ButtonStyle.Primary),
     showStop &&
-    new ButtonBuilder()
-      .setCustomId(`bitdclock--stop`)
-      .setLabel('Stop')
-      .setStyle(ButtonStyle.Danger)
+      new ButtonBuilder()
+        .setCustomId(`bitdclock--stop`)
+        .setLabel('Stop')
+        .setStyle(ButtonStyle.Danger)
   ].filter((button) => button !== false) as ButtonBuilder[]
 
   const components = new ActionRowBuilder<ButtonBuilder>().addComponents(

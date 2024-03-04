@@ -10,11 +10,11 @@ export const generateRollResult = (quantity: number) => {
       {
         drop: isZero
           ? {
-            highest: 1
-          }
+              highest: 1
+            }
           : {
-            lowest: quantity - 1
-          }
+              lowest: quantity - 1
+            }
       }
     ]
   })

@@ -19,13 +19,16 @@ export const handleIncrement = async (interaction: ButtonInteraction) => {
     }
     await interaction.message.edit(buildClockMessageOptions(newClockOptions))
     await interaction.reply({
-      content: `${clockNameLink(newClockOptions.name, link)} completed - **${newClockOptions.segments
-        }/${newClockOptions.segments}**`
+      content: `${clockNameLink(newClockOptions.name, link)} completed - **${
+        newClockOptions.segments
+      }/${newClockOptions.segments}**`
     })
-    const campaign = await CampaignService.findOrCreateByDiscordId(discordGuildId)
+    const campaign = await CampaignService.findOrCreateByDiscordId(
+      discordGuildId
+    )
     await ClockService.updateClock({
       ...newClockOptions,
-      campaign_id: campaign.id,
+      campaign_id: campaign.id
     })
   } else {
     const newClockOptions = {
@@ -41,10 +44,12 @@ export const handleIncrement = async (interaction: ButtonInteraction) => {
       )} ticked up: **${newProgress}/${newClockOptions.segments}**`
     })
 
-    const campaign = await CampaignService.findOrCreateByDiscordId(discordGuildId)
+    const campaign = await CampaignService.findOrCreateByDiscordId(
+      discordGuildId
+    )
     await ClockService.updateClock({
       ...newClockOptions,
-      campaign_id: campaign.id,
+      campaign_id: campaign.id
     })
   }
 }

@@ -11,7 +11,9 @@ export const clocks = async (interaction: ChatInputCommandInteraction) => {
       content: `Cannot find guildId`
     })
   }
-  const campaign = await CampaignService.findOrCreateByDiscordId(interaction.guildId!)
+  const campaign = await CampaignService.findOrCreateByDiscordId(
+    interaction.guildId!
+  )
   const clocks = await ClockService.getActiveClocks(campaign.id)
   const embeds = clocks.map((clockOptions) => {
     return buildClockMessageOptions(clockOptions).embeds[0]

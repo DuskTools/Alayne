@@ -22,6 +22,6 @@ export const handleRestart = async (interaction: ButtonInteraction) => {
 
   await ClockService.updateClock({
     ...newClockOptions,
-    campaign_id: campaign.id,
+    campaign_id: campaign.id
   })
 }
