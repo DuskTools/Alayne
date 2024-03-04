@@ -3,16 +3,18 @@
     "start": "npx ts-node-esm -r tsconfig-paths/register src/index.ts",
     "deploy": "ts-node src/deploy-commands.ts",
     "build": "rm -rf ./dist/ & tsc -p .",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier . --check",
-    "format:fix": "prettier . --write"
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint . --fix",
+    "format": "npx prettier . --check",
+    "format:fix": "npx prettier . --write",
+    "ts:check": "tsc --noEmit",
+    "gen:types": "supabase gen types typescript --project-id lmzwlfmufwxdddylxbyg > src/database.types.ts"
   },
   "dependencies": {
     "@discordjs/builders": "^1.2.0",
+    "@supabase/supabase-js": "^2.39.7",
     "discord.js": "^14.5.0",
     "dotenv": "^16.0.3",
-    "firebase": "^10.7.2",
     "randsum": "^3.1.0"
   },
   "devDependencies": {

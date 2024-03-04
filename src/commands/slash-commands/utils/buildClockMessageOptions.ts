@@ -5,8 +5,8 @@ import {
   ButtonStyle,
   EmbedBuilder
 } from 'discord.js'
-import { ClockOptions } from '../clock/types.js'
 import { Colors } from 'discord.js'
+import { Clock } from '../../../types.js'
 
 const clockImage = (progress: number, segment: number) =>
   `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`
@@ -34,8 +34,8 @@ export const buildClockMessageOptions = ({
   progress = 0,
   active,
   link
-}: Omit<ClockOptions, 'discordGuildId' | 'link'> &
-  Partial<Pick<ClockOptions, 'link'>>) => {
+}: Omit<Clock, 'campaign_id' | 'link' | 'id' | 'created_at'> &
+  Partial<Pick<Clock, 'link'>>) => {
   const fields: APIEmbedField[] = [
     {
       name: 'Progress',

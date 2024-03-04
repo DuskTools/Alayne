@@ -3,6 +3,7 @@ import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
 import { extractClockInfoFromButtonInteraction } from '../utils/extractClockInfoFromButtonInteraction.js'
 import { clockNameLink } from './clockNameLink.js'
 import ClockService from '../../../services/ClockService.js'
+import CampaignService from '../../../services/CampaignService.js'
 
 export const handleRestart = async (interaction: ButtonInteraction) => {
   const discordGuildId = interaction.guildId || ''
@@ -17,8 +18,10 @@ export const handleRestart = async (interaction: ButtonInteraction) => {
     content: `${clockNameLink(clockOptions.name, link)} **Restarted**`
   })
 
+  const campaign = await CampaignService.findOrCreateByDiscordId(discordGuildId)
+
   await ClockService.updateClock({
     ...newClockOptions,
-    discordGuildId
+    campaign_id: campaign.id
   })
 }

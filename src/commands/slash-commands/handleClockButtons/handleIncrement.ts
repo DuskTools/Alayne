@@ -3,6 +3,7 @@ import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
 import { extractClockInfoFromButtonInteraction } from '../utils/extractClockInfoFromButtonInteraction.js'
 import { clockNameLink } from './clockNameLink.js'
 import ClockService from '../../../services/ClockService.js'
+import CampaignService from '../../../services/CampaignService.js'
 
 export const handleIncrement = async (interaction: ButtonInteraction) => {
   const link = interaction.message.url
@@ -22,9 +23,12 @@ export const handleIncrement = async (interaction: ButtonInteraction) => {
         newClockOptions.segments
       }/${newClockOptions.segments}**`
     })
+    const campaign = await CampaignService.findOrCreateByDiscordId(
+      discordGuildId
+    )
     await ClockService.updateClock({
       ...newClockOptions,
-      discordGuildId
+      campaign_id: campaign.id
     })
   } else {
     const newClockOptions = {
@@ -40,9 +44,12 @@ export const handleIncrement = async (interaction: ButtonInteraction) => {
       )} ticked up: **${newProgress}/${newClockOptions.segments}**`
     })
 
+    const campaign = await CampaignService.findOrCreateByDiscordId(
+      discordGuildId
+    )
     await ClockService.updateClock({
       ...newClockOptions,
-      discordGuildId
+      campaign_id: campaign.id
     })
   }
 }

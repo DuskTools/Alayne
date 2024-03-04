@@ -1,6 +1,7 @@
 import { ChatInputCommandInteraction } from 'discord.js'
 import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
 import ClockService from '../../../services/ClockService.js'
+import CampaignService from '../../../services/CampaignService.js'
 
 export async function clock(interaction: ChatInputCommandInteraction) {
   await interaction.deferReply({ ephemeral: true })
@@ -20,9 +21,8 @@ export async function clock(interaction: ChatInputCommandInteraction) {
     })
   }
 
-  const clockList = (await ClockService.getClocks(discordGuildId)).map((ref) =>
-    ref.data()
-  )
+  const campaign = await CampaignService.findOrCreateByDiscordId(discordGuildId)
+  const clockList = await ClockService.getActiveClocks(campaign.id)
   const clockExists =
     clockList.find((message) => message.name === name) !== undefined
   if (clockExists) {
@@ -35,7 +35,7 @@ export async function clock(interaction: ChatInputCommandInteraction) {
     segments,
     active: true,
     progress: 0,
-    discordGuildId
+    campaign_id: campaign.id
   }
   const clockMessage = await interaction.channel?.send(
     buildClockMessageOptions(newClockOptions)
