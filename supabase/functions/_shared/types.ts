@@ -1,4 +1,4 @@
-import { Database } from "../supabase/functions/_shared/database.types.js";
+import { Database } from "./database.types.ts";
 
 export type ClockUpdateParams =
   Database["public"]["Tables"]["clocks"]["Update"];

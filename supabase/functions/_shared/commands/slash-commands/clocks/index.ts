@@ -1,27 +1,34 @@
-import { ChatInputCommandInteraction } from 'discord.js'
-import { buildClockMessageOptions } from '../utils/buildClockMessageOptions.js'
-import ClockService from '../../../services/ClockService.js'
-import CampaignService from '../../../services/CampaignService.js'
+import { json } from "https://deno.land/x/sift@0.6.0/mod.ts";
+import {
+  InteractionResponseType,
+} from "https://deno.land/x/discord_api_types/v10.ts";
+import { APIInteraction } from "https://deno.land/x/discord_api_types@0.37.71/v10.ts";
 
-export const clocks = async (interaction: ChatInputCommandInteraction) => {
-  await interaction.deferReply({ ephemeral: true })
+import ClockService from "../../../services/ClockService.ts";
+import CampaignService from "../../../services/CampaignService.ts";
+import { buildClockMessageOptions } from "../utils/buildClockMessageOptions.ts";
 
-  if (interaction.guildId === null) {
-    await interaction.editReply({
-      content: `Cannot find guildId`
-    })
-  }
+const handleClocks = async (interaction: APIInteraction) => {
+  const guildId = interaction.guild_id!;
   const campaign = await CampaignService.findOrCreateByDiscordId(
-    interaction.guildId!
-  )
-  const clocks = await ClockService.getActiveClocks(campaign.id)
+    guildId,
+  );
+  const clocks = await ClockService.getActiveClocks(campaign.id);
   const embeds = clocks.map((clockOptions) => {
-    return buildClockMessageOptions(clockOptions).embeds[0]
-  })
+    return buildClockMessageOptions(clockOptions).embeds[0];
+  });
 
-  if (embeds.length > 0) {
-    interaction.editReply({ embeds })
-  } else {
-    interaction.editReply({ content: 'No clocks found!' })
-  }
-}
+  const content = embeds.length > 0
+    ? { embeds }
+    : { content: "No clocks found!" };
+
+  return json({
+    type: InteractionResponseType.ChannelMessageWithSource,
+    data: {
+      ...content,
+      flags: 1 << 6,
+    },
+  });
+};
+
+export default handleClocks;

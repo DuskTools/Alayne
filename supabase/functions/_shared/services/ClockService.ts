@@ -1,12 +1,8 @@
-import supabase from "../supabase/index.js";
-import {
-  Clock,
-  ClockCreateParams,
-  ClockUpdateParams,
-} from "../../../../src/types.js";
+import { adminClient } from "../supabase/index.ts";
+import { Clock, ClockCreateParams, ClockUpdateParams } from "../types.ts";
 
 async function create(clockParams: ClockCreateParams) {
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from("clocks")
     .insert(clockParams)
     .select()
@@ -21,7 +17,7 @@ async function create(clockParams: ClockCreateParams) {
 }
 
 async function getActiveClocks(campaign_id: string) {
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from("clocks")
     .select()
     .eq("campaign_id", campaign_id)
@@ -39,7 +35,7 @@ async function getClock({
   campaign_id,
   name,
 }: Pick<Clock, "name" | "campaign_id">) {
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from("clocks")
     .select()
     .eq("campaign_id", campaign_id)
@@ -62,7 +58,7 @@ async function getClock({
 async function updateClock(
   options: ClockUpdateParams & Pick<Clock, "name" | "campaign_id">,
 ) {
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from("clocks")
     .update(options)
     .eq("campaign_id", options.campaign_id)

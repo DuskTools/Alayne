@@ -2,9 +2,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { Database } from "../database.types.ts";
 
-const URL = Deno.env.get("DISCORD_PUBLIC_KEY")!;
-const ANON = Deno.env.get("SUPABASE_PUBLIC_ANON_KEY")!;
-const ADMIN = Deno.env.get("SUPABASE_ADMIN_KEY")!;
+const URL = Deno.env.get("API_URL")!;
+const ANON = Deno.env.get("API_PUBLIC_ANON_KEY")!;
+const ADMIN = Deno.env.get("API_PUBLIC_SERVICE_ROLE_KEY")!;
 
 export const anonClient = createClient<Database>(
   URL,
