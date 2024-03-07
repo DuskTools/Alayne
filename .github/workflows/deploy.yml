@@ -21,4 +21,4 @@ jobs:
         with:
           version: latest
 
-      - run: supabase functions serve --project-ref lmzwlfmufwxdddylxbyg
+      - run: supabase functions deploy --project-ref lmzwlfmufwxdddylxbyg
