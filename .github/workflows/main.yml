@@ -1,37 +1,20 @@
-name: CI
-on: [push]
+name: Build
+
+on: push
+
 jobs:
   build:
-    name: Compile Typescript
-
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node: ['21.5.0']
-        os: [ubuntu-latest]
-
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Set timezone
-        uses: szenius/set-timezone@v1.2
+      - uses: actions/checkout@v3
+      - uses: denoland/setup-deno@v1
         with:
-          timezoneLinux: 'America/New_York'
+          deno-version: v1.x
 
-      - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
+      # Check if the code is formatted according to Deno's default
+      # formatting conventions.
+      - run: deno fmt --check
 
-      - name: 📦 Install dependencies
-        run: npm install
-
-      - name: Check types
-        run: npm run ts:check
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Format
-        run: npm run format
+      # Scan the code for syntax errors and style issues. If
+      # you want to use a custom linter configuration you can add a configuration file with --config <myconfig>
+      - run: deno lint
