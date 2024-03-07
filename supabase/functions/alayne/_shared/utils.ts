@@ -7,8 +7,7 @@ function hexToUint8Array(hex: string) {
 export async function verifySignature(
   request: Request,
 ): Promise<{ valid: boolean; body: string }> {
-  const PUBLIC_KEY = Deno.env.get("DISCORD_TOKEN")!
-  console.log(PUBLIC_KEY)
+  const PUBLIC_KEY = Deno.env.get("DISCORD_PUBLIC_KEY")!
   // Discord sends these headers with every request.
   const signature = request.headers.get("X-Signature-Ed25519")!
   const timestamp = request.headers.get("X-Signature-Timestamp")!
