@@ -3,18 +3,17 @@ import {
   serve,
   validateRequest,
 } from "https://deno.land/x/sift@0.6.0/mod.ts";
-import { verifySignature } from "../_shared/utils.ts";
+import { verifySignature } from "./_shared/utils.ts";
 
 import {
   APIInteraction,
-  InteractionResponseType,
   InteractionType,
 } from "https://deno.land/x/discord_api_types/v10.ts";
-import handleClocks from "../_shared/commands/slash-commands/clocks/index.ts";
+import handleClocks from "./_shared/commands/slash-commands/clocks/index.ts";
+import { handleRoll } from "./_shared/commands/slash-commands/roll/index.ts";
 
 enum SlashCommands {
   Clocks = "clocks",
-  Clock = "clock",
   Roll = "roll",
 }
 
@@ -43,35 +42,18 @@ async function alayne(request: Request) {
   }
 
   const rawBody: APIInteraction = JSON.parse(body);
-  const { type = 0, data } = rawBody;
-  if (type === InteractionType.Ping) {
+  if (rawBody.type === InteractionType.Ping) {
     return json({
       type: 1, // Type 1 in a response is a Pong interaction response type.
     });
   }
 
-  if (type === InteractionType.ApplicationCommand) {
-    const { name } = data as { name: SlashCommands };
-
-    switch (name) {
+  if (rawBody.type === InteractionType.ApplicationCommand) {
+    switch (rawBody.data.name) {
       case SlashCommands.Clocks:
         return handleClocks(rawBody);
-      case SlashCommands.Clock:
-        return json({
-          type: 4,
-          data: {
-            content: `Hello, ${name}!`,
-            flags: 1 << 6,
-          },
-        });
       case SlashCommands.Roll:
-        return json({
-          type: 4,
-          data: {
-            content: `Hello, ${name}!`,
-            flags: 1 << 6,
-          },
-        });
+        return handleRoll(rawBody);
     }
   }
 
