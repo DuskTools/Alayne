@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "dev": "supabase functions serve alayne --no-verify-jwt --env-file .env"
+    "dev": "supabase functions serve alayne --no-verify-jwt --env-file .env",
+    "gen:types": "supabase gen types > supabase/functions/_shared/supabase/database.types.ts"
   },
   "fmt": {
     "semiColons": false
