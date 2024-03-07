@@ -1,5 +1,5 @@
-import { RollResult } from "npm:randsum";
-import { BladesRollType } from "./constants.ts";
+import { RollResult } from "npm:randsum"
+import { BladesRollType } from "./constants.ts"
 
 export const parseRolls = (
   result: RollResult<number>,
@@ -7,11 +7,11 @@ export const parseRolls = (
 ): string => {
   return result.initialRolls
     .map((roll, index, array) => {
-      const isCritical = bladesSuccess === "critical";
-      const firstInstaceOfRoll = array.indexOf(roll) === index;
+      const isCritical = bladesSuccess === "critical"
+      const firstInstaceOfRoll = array.indexOf(roll) === index
       return roll === result.total && (isCritical || firstInstaceOfRoll)
         ? `**${roll}**`
-        : `~~${roll}~~`;
+        : `~~${roll}~~`
     })
-    .join(", ");
-};
+    .join(", ")
+}

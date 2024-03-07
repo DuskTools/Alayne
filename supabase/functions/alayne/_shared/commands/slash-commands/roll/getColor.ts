@@ -1,15 +1,15 @@
-import { Colors } from "npm:discord.js";
-import { BladesRollType } from "./constants.ts";
+import { Colors } from "npm:discord.js"
+import { BladesRollType } from "./constants.ts"
 
 export const getColor = (type: BladesRollType): number => {
   switch (type) {
     case "critical":
-      return Colors.Gold;
+      return Colors.Gold
     case "success":
-      return Colors.Green;
+      return Colors.Green
     case "partial":
-      return Colors.Yellow;
+      return Colors.Yellow
     case "failure":
-      return Colors.Red;
+      return Colors.Red
   }
-};
+}

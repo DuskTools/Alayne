@@ -1,22 +1,22 @@
-import { adminClient } from "../supabase/index.ts";
+import { adminClient } from "../supabase/index.ts"
 
 async function findOrCreateByDiscordId(discordGuildId: string) {
-  const existingCampaign = await findByDiscordId(discordGuildId);
+  const existingCampaign = await findByDiscordId(discordGuildId)
   if (existingCampaign) {
-    return existingCampaign;
+    return existingCampaign
   }
 
   const { data, error } = await adminClient
     .from("campaigns")
     .insert({ discord_guild_id: discordGuildId })
     .select()
-    .single();
+    .single()
   if (error) {
-    console.log("Find or create campaign error");
-    console.log(error);
+    console.log("Find or create campaign error")
+    console.log(error)
   }
 
-  return data!;
+  return data!
 }
 
 async function findByDiscordId(discordGuildId: string) {
@@ -25,18 +25,18 @@ async function findByDiscordId(discordGuildId: string) {
     .select()
     .eq("discord_guild_id", discordGuildId)
     .limit(1)
-    .single();
+    .single()
 
   if (error) {
-    console.log("Find campaign error");
-    console.log(error.message);
+    console.log("Find campaign error")
+    console.log(error.message)
   }
 
   if (!data) {
-    console.log("No Campaign Found for ", discordGuildId);
+    console.log("No Campaign Found for ", discordGuildId)
   }
 
-  return data;
+  return data
 }
 
-export default { findOrCreateByDiscordId };
+export default { findOrCreateByDiscordId }

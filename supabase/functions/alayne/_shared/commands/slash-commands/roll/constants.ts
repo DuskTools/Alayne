@@ -1,1 +1,1 @@
-export type BladesRollType = "critical" | "success" | "partial" | "failure";
+export type BladesRollType = "critical" | "success" | "partial" | "failure"

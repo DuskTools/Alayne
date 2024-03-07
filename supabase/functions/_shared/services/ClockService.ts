@@ -1,19 +1,23 @@
-import { adminClient } from "../supabase/index.ts";
-import { Clock, ClockCreateParams, ClockUpdateParams } from "../types.ts";
+import { adminClient } from "../supabase/index.ts"
+import {
+  Clock,
+  ClockCreateParams,
+  ClockUpdateParams,
+} from "../supabase/types.ts"
 
 async function create(clockParams: ClockCreateParams) {
   const { data, error } = await adminClient
     .from("clocks")
     .insert(clockParams)
     .select()
-    .single();
+    .single()
 
   if (error) {
-    console.log("Create clock error");
-    console.log(error.message);
+    console.log("Create clock error")
+    console.log(error.message)
   }
 
-  return data!;
+  return data!
 }
 
 async function getActiveClocks(campaign_id: string) {
@@ -21,14 +25,14 @@ async function getActiveClocks(campaign_id: string) {
     .from("clocks")
     .select()
     .eq("campaign_id", campaign_id)
-    .eq("active", true);
+    .eq("active", true)
 
   if (error) {
-    console.log("get active clocks error");
-    console.log(error.message);
+    console.log("get active clocks error")
+    console.log(error.message)
   }
 
-  return data!;
+  return data!
 }
 
 async function getClock({
@@ -41,18 +45,18 @@ async function getClock({
     .eq("campaign_id", campaign_id)
     .eq("name", name)
     .limit(1)
-    .single();
+    .single()
 
   if (error) {
-    console.log("get clock error");
-    console.log(error.message);
+    console.log("get clock error")
+    console.log(error.message)
   }
 
   if (!data) {
-    throw new Error("No Clock found");
+    throw new Error("No Clock found")
   }
 
-  return data;
+  return data
 }
 
 async function updateClock(
@@ -64,14 +68,14 @@ async function updateClock(
     .eq("campaign_id", options.campaign_id)
     .eq("name", options.name)
     .select()
-    .single();
+    .single()
 
   if (error) {
-    console.log("update clock error");
-    console.log(error.message);
+    console.log("update clock error")
+    console.log(error.message)
   }
 
-  return data!;
+  return data!
 }
 
 export default {
@@ -79,4 +83,4 @@ export default {
   getClock,
   create,
   getActiveClocks,
-};
+}

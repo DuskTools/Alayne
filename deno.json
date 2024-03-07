@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "dev": "supabase functions serve alayne --no-verify-jwt --env-file .env"
+  },
+  "fmt": {
+    "options": {
+      "semiColons": false
+    }
+  }
+}
