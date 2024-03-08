@@ -7,7 +7,7 @@ import Colors from "../../../../../_shared/Colors.ts"
 import { EmbedBuilder } from "npm:@discordjs/builders"
 
 const clockImage = (progress: number, segment: number) =>
-  `https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/clocks/${segment}/${progress}.png`
+  `https://raw.githubusercontent.com/DuskTools/DuskFunctions/main/supabase/functions/_shared/assets/clocks/${segment}/${progress}.png`
 
 const getColor = (progress: number, segment: number, active: boolean) => {
   const ratio = progress / segment

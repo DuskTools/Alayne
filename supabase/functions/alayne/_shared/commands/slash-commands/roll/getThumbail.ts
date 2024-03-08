@@ -2,7 +2,7 @@ import { BladesRollType } from "./constants.ts"
 
 export const getThumbnail = (total: number, type: BladesRollType): string => {
   const root =
-    "https://raw.githubusercontent.com/alxjrvs/bladesinthediscord/main/src/assets/d6/"
+    "https://raw.githubusercontent.com/DuskTools/DuskFunctions/main/supabase/functions/_shared/assets/d6/"
   switch (total) {
     case 1:
       return `${root}one.png`
