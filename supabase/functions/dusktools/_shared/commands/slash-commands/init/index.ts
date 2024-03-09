@@ -5,7 +5,7 @@ import {
 } from "https://deno.land/x/discord_api_types@0.37.71/v10.ts"
 
 import { REST } from "npm:@discordjs/rest"
-import { Routes } from "npm:@discordjs/rest"
+import { Routes } from "npm:discord-api-types/v10"
 import CampaignService from "../../../../../_shared/services/CampaignService.ts"
 
 const handleInit = async (interaction: APIApplicationCommandInteraction) => {
