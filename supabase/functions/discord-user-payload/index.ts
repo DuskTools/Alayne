@@ -29,7 +29,7 @@ async function discordUserPayload(request: Request) {
     return json(error, { status: 500 })
   }
 
-  return json({ data })
+  return json({ data, typeof: typeof data, token: data.discord_token })
 
   // try {
   //   const discordRest = new REST({ version: "10" }).setToken(data.discord_token)
