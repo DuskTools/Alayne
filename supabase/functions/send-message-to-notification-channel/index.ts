@@ -16,12 +16,12 @@ async function sendMessageToNotificationChannel(request: Request) {
     Deno.env.get("DISCORD_BOT_TOKEN")!,
   )
 
-  const response = await discordRest.post(
+  await discordRest.post(
     Routes.channelMessages(notification_channel),
     {
       body: "Hello, World!",
     },
   )
 
-  return json({ response }, { status: 200 })
+  return json({ content: "ok" }, { status: 200 })
 }
