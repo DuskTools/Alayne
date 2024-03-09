@@ -20,6 +20,8 @@ async function updateCampaignData(request: Request) {
   const { name } = await discordRest.get(Routes.guild(discord_guild_id)) as {
     name: string
   }
+  console.log({ name })
+  console.log({ discord_guild_id })
 
   const { data, error } = await adminClient
     .from("campaigns")
