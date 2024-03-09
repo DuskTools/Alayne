@@ -11,6 +11,7 @@ async function sendMessageToNotificationChannel(request: Request) {
   const { notification_channel } = await request.json() as {
     notification_channel: string
   }
+  console.log(notification_channel)
 
   const discordRest = new REST({ version: "10" }).setToken(
     Deno.env.get("DISCORD_BOT_TOKEN")!,
