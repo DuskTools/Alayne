@@ -1,21 +1,21 @@
 import { json, serve } from "https://deno.land/x/sift@0.6.0/mod.ts"
 import { adminClient } from "../_shared/supabase/index.ts"
 
-import { REST } from "npm:@discordjs/rest"
 import { Routes } from "npm:discord-api-types/v10"
+import discordRest from "../dusktools/_shared/discordRest.ts"
+import corsResponse from "../dusktools/_shared/corsResponse.ts"
 
 serve({
-  "/update-campaign-data": updateCampaignData,
+  "/sync-campaign-with-discord": syncCampaignWithDiscord,
 })
 
-async function updateCampaignData(request: Request) {
+async function syncCampaignWithDiscord(request: Request) {
+  if (request.method === "OPTIONS") {
+    return corsResponse
+  }
   const { discord_guild_id } = await request.json() as {
     discord_guild_id: string
   }
-
-  const discordRest = new REST({ version: "10" }).setToken(
-    Deno.env.get("DISCORD_BOT_TOKEN")!,
-  )
 
   const { name } = await discordRest.get(Routes.guild(discord_guild_id)) as {
     name: string
