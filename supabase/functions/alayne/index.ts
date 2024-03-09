@@ -15,6 +15,7 @@ import { handleRoll } from "./_shared/commands/slash-commands/roll/index.ts"
 enum SlashCommands {
   Clocks = "clocks",
   Roll = "roll",
+  Register = "register",
 }
 
 serve({
@@ -51,6 +52,8 @@ async function alayne(request: Request) {
     switch (rawBody.data.name) {
       case SlashCommands.Clocks:
         return handleClocks(rawBody)
+      case SlashCommands.Register:
+        return handleRoll(rawBody)
       case SlashCommands.Roll:
         return handleRoll(rawBody)
     }

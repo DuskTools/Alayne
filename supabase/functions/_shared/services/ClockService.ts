@@ -1,11 +1,7 @@
 import { adminClient } from "../supabase/index.ts"
-import {
-  Clock,
-  ClockCreateParams,
-  ClockUpdateParams,
-} from "../supabase/types.ts"
+import { Clock } from "../supabase/types.ts"
 
-async function create(clockParams: ClockCreateParams) {
+async function create(clockParams: Clock["Insert"]) {
   const { data, error } = await adminClient
     .from("clocks")
     .insert(clockParams)
@@ -38,11 +34,11 @@ async function getActiveClocks(campaign_id: string) {
 async function getClock({
   campaign_id,
   name,
-}: Pick<Clock, "name" | "campaign_id">) {
+}: Pick<Clock["Row"], "name" | "campaign_id">) {
   const { data, error } = await adminClient
     .from("clocks")
     .select()
-    .eq("campaign_id", campaign_id)
+    .eq("campaign_id", campaign_id!)
     .eq("name", name)
     .limit(1)
     .single()
@@ -60,12 +56,16 @@ async function getClock({
 }
 
 async function updateClock(
-  options: ClockUpdateParams & Pick<Clock, "name" | "campaign_id">,
+  options:
+    & Clock[
+      "Update"
+    ]
+    & Pick<Clock["Row"], "name" | "campaign_id">,
 ) {
   const { data, error } = await adminClient
     .from("clocks")
     .update(options)
-    .eq("campaign_id", options.campaign_id)
+    .eq("campaign_id", options.campaign_id!)
     .eq("name", options.name)
     .select()
     .single()

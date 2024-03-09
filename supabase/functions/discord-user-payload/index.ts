@@ -1,6 +1,5 @@
 import { json, serve } from "https://deno.land/x/sift@0.6.0/mod.ts"
 
-import { REST } from "npm:@discordjs/rest"
 import { Routes } from "npm:discord-api-types/v10"
 
 import { anonClient } from "../_shared/supabase/index.ts"

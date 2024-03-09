@@ -33,8 +33,8 @@ export const buildClockMessageOptions = ({
   active,
   link,
 }:
-  & Omit<Clock, "campaign_id" | "link" | "id" | "created_at">
-  & Partial<Pick<Clock, "link">>) => {
+  & Omit<Clock["Row"], "campaign_id" | "link" | "id" | "created_at">
+  & Partial<Pick<Clock["Row"], "link">>) => {
   const fields: APIEmbedField[] = [
     {
       name: "Progress",
