@@ -1,5 +1,13 @@
 import { Database } from "./database.types.ts"
 
-export type ClockUpdateParams = Database["public"]["Tables"]["clocks"]["Update"]
-export type ClockCreateParams = Database["public"]["Tables"]["clocks"]["Insert"]
-export type Clock = Database["public"]["Tables"]["clocks"]["Row"]
+type DatabaseTables = Database["public"]["Tables"]
+type DatabaseTable<T extends keyof DatabaseTables> = DatabaseTables[T]
+type DatabaseTypes<T extends keyof DatabaseTables> = {
+  Row: DatabaseTable<T>["Row"]
+  Insert: Omit<DatabaseTable<T>["Insert"], "createdAt" | "id">
+  Update: Omit<DatabaseTable<T>["Update"], "createdAt" | "id">
+}
+
+export type Clock = DatabaseTypes<"clocks">
+export type Campaign = DatabaseTypes<"campaigns">
+export type User = DatabaseTypes<"users">

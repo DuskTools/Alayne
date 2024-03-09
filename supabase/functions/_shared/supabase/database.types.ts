@@ -30,7 +30,7 @@ export type Database = {
       clocks: {
         Row: {
           active: boolean
-          campaign_id: string
+          campaign_id: string | null
           created_at: string
           id: string
           link: string
@@ -40,7 +40,7 @@ export type Database = {
         }
         Insert: {
           active?: boolean
-          campaign_id: string
+          campaign_id?: string | null
           created_at?: string
           id?: string
           link: string
@@ -50,7 +50,7 @@ export type Database = {
         }
         Update: {
           active?: boolean
-          campaign_id?: string
+          campaign_id?: string | null
           created_at?: string
           id?: string
           link?: string
@@ -58,7 +58,53 @@ export type Database = {
           progress?: number
           segments?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "public_clocks_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      users: {
+        Row: {
+          auth_id: string
+          avatar_url: string
+          created_at: string
+          discord_refresh_token: string
+          discord_token: string
+          email: string
+          id: string
+        }
+        Insert: {
+          auth_id: string
+          avatar_url: string
+          created_at?: string
+          discord_refresh_token: string
+          discord_token: string
+          email: string
+          id?: string
+        }
+        Update: {
+          auth_id?: string
+          avatar_url?: string
+          created_at?: string
+          discord_refresh_token?: string
+          discord_token?: string
+          email?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_users_auth_id_fkey"
+            columns: ["auth_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
@@ -81,27 +127,23 @@ export type Tables<
     | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (
-      & Database[PublicTableNameOrOptions["schema"]]["Tables"]
-      & Database[PublicTableNameOrOptions["schema"]]["Views"]
-    )
-    : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database } ? (
-    & Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    & Database[PublicTableNameOrOptions["schema"]]["Views"]
-  )[TableName] extends {
-    Row: infer R
-  } ? R
-  : never
-  : PublicTableNameOrOptions extends keyof (
-    & Database["public"]["Tables"]
-    & Database["public"]["Views"]
-  ) ? (
-      & Database["public"]["Tables"]
-      & Database["public"]["Views"]
-    )[PublicTableNameOrOptions] extends {
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
-    } ? R
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
+      Database["public"]["Views"])
+  ? (Database["public"]["Tables"] &
+      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
+      Row: infer R
+    }
+    ? R
     : never
   : never
 
@@ -111,16 +153,18 @@ export type TablesInsert<
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-    Insert: infer I
-  } ? I
-  : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-    ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
       Insert: infer I
-    } ? I
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
+  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+      Insert: infer I
+    }
+    ? I
     : never
   : never
 
@@ -130,16 +174,18 @@ export type TablesUpdate<
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-    Update: infer U
-  } ? U
-  : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-    ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
       Update: infer U
-    } ? U
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
+  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+      Update: infer U
+    }
+    ? U
     : never
   : never
 
@@ -149,9 +195,9 @@ export type Enums<
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never = never
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-    ? Database["public"]["Enums"][PublicEnumNameOrOptions]
+  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
   : never

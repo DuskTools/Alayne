@@ -21,7 +21,6 @@ serve({
   "/alayne": alayne,
 })
 
-// The main logic of the Discord Slash Command is defined in this function.
 async function alayne(request: Request) {
   const { error } = await validateRequest(request, {
     POST: {
