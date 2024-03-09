@@ -8,6 +8,7 @@ serve({
 })
 
 async function sendMessageToNotificationChannel(request: Request) {
+  console.log("Before")
   const { notification_channel } = await request.json() as {
     notification_channel: string
   }
