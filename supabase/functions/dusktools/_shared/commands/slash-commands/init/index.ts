@@ -29,21 +29,23 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
     Deno.env.get("DISCORD_BOT_TOKEN")!,
   )
 
-  try {
-    const foo = await discordRest.get(Routes.guild(discord_guild_id))
-
-    console.log(foo)
-    const content = "Testing"
-    return json({
-      type: InteractionResponseType.ChannelMessageWithSource,
-      data: {
-        content,
-        flags: 1 << 6,
-      },
-    })
-  } catch (e) {
-    console.error(e)
+  const { name } = await discordRest.get(Routes.guild(discord_guild_id)) as {
+    name: string
   }
+
+  const newCampaign = await CampaignService.create({
+    discord_guild_id,
+    name,
+  })
+
+  const content = `Campaign Created! ${newCampaign.id}`
+  return json({
+    type: InteractionResponseType.ChannelMessageWithSource,
+    data: {
+      content,
+      flags: 1 << 6,
+    },
+  })
 }
 
 export default handleInit
