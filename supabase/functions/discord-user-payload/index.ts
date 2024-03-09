@@ -23,24 +23,25 @@ async function discordUserPayload(request: Request) {
     .from("users")
     .select()
     .eq("id", body.id)
-    .limit(1)
     .single()
 
   if (error) {
     return json(error, { status: 500 })
   }
 
-  try {
-    const discordRest = new REST({ version: "10" }).setToken(data.discord_token)
-    const guilds = await discordRest.get(Routes.userGuilds())
+  return json({ data })
 
-    const response: DiscordResponse = {
-      campaigns: guilds as unknown[],
-    }
-    return json(response)
-  } catch (e) {
-    return json({ message: `Error fetching user guilds: ${e}` }, {
-      status: 500,
-    })
-  }
+  // try {
+  //   const discordRest = new REST({ version: "10" }).setToken(data.discord_token)
+  //   const guilds = await discordRest.get(Routes.userGuilds())
+
+  //   const response: DiscordResponse = {
+  //     campaigns: guilds as unknown[],
+  //   }
+  //   return json(response)
+  // } catch (e) {
+  //   return json({ message: `Error fetching user guilds: ${e}` }, {
+  //     status: 500,
+  //   })
+  // }
 }
