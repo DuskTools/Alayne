@@ -19,10 +19,10 @@ enum SlashCommands {
 }
 
 serve({
-  "/alayne": alayne,
+  "/dusktools": dusktools,
 })
 
-async function alayne(request: Request) {
+async function dusktools(request: Request) {
   const { error } = await validateRequest(request, {
     POST: {
       headers: ["X-Signature-Ed25519", "X-Signature-Timestamp"],

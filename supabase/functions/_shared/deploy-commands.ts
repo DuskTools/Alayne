@@ -5,7 +5,7 @@ const env = await load()
 
 const roll = new SlashCommandBuilder()
   .setName("roll")
-  .setDescription("Roll a number of dice in the Blades in the Dark system")
+  .setDescription("Roll some dice. Test your luck.")
   .addIntegerOption((option) =>
     option
       .setName("dice_pool")
@@ -14,6 +14,10 @@ const roll = new SlashCommandBuilder()
       .setMaxValue(10)
       .setRequired(true)
   )
+
+const init = new SlashCommandBuilder()
+  .setName("init")
+  .setDescription("Setup DuskTools in the Server")
 
 const clocks = new SlashCommandBuilder()
   .setName("clocks")
@@ -39,7 +43,7 @@ const clocks = new SlashCommandBuilder()
 //       .setRequired(true)
 //   )
 
-const commands = [roll, clocks].map((command) => command.toJSON())
+const commands = [roll, clocks, init].map((command) => command.toJSON())
 
 const DISCORD_BOT_TOKEN = env["DISCORD_BOT_TOKEN"]
 const DISCORD_APP_ID = env["DISCORD_APP_ID"]

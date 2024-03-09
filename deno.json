@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev:alayne": "supabase functions serve alayne --no-verify-jwt --env-file .env",
+    "dev:dusktools": "supabase functions serve dusktools --no-verify-jwt --env-file .env",
     "dev:discord-user-payload": "supabase functions serve discord-user-payload --no-verify-jwt --env-file .env",
     "gen:db:types": "npx --yes supabase gen types typescript --project-id lmzwlfmufwxdddylxbyg --schema public > supabase/functions/_shared/supabase/database.types.ts",
     "deploy-bot-commands": "deno run --allow-read --allow-net --allow-env supabase/functions/_shared/deploy-commands.ts"
