@@ -17,6 +17,8 @@ async function sendMessageToNotificationChannel(request: Request) {
     notification_channel: string
     content?: string
   }
+  console.log(notification_channel)
+  console.log(content)
 
   await discordRest.post(
     Routes.channelMessages(notification_channel),
