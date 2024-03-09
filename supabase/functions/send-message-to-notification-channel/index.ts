@@ -18,6 +18,9 @@ async function sendMessageToNotificationChannel(request: Request) {
 
   const response = await discordRest.post(
     Routes.channelMessages(notification_channel),
+    {
+      body: "Hello, World!",
+    },
   )
 
   return json({ response }, { status: 200 })
