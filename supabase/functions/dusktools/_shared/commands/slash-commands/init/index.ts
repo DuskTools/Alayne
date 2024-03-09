@@ -10,19 +10,19 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
   const discord_guild_id = interaction.guild_id!
   const discord_user_id = interaction.member?.user.id!
 
-  const campaign = await CampaignService.findByDiscordGuildId(
-    { discord_guild_id },
-  )
+  // const campaign = await CampaignService.findByDiscordGuildId(
+  //   { discord_guild_id },
+  // )
 
-  if (campaign) {
-    return json({
-      type: InteractionResponseType.ChannelMessageWithSource,
-      data: {
-        content: "This Campaign has already initialized",
-        flags: 1 << 6,
-      },
-    })
-  }
+  // if (campaign) {
+  //   return json({
+  //     type: InteractionResponseType.ChannelMessageWithSource,
+  //     data: {
+  //       content: "This Campaign has already initialized",
+  //       flags: 1 << 6,
+  //     },
+  //   })
+  // }
 
   const newCampaign = await CampaignService.create({
     discord_guild_id,
