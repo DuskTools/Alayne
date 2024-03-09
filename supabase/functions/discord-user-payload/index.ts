@@ -36,7 +36,7 @@ async function discordUserPayload(request: Request) {
         headers: { Authorization: `Bearer ${data.discord_token}` },
       },
     )
-    return json({ guilds })
+    return json({ guilds: guilds.body })
 
     // const response: DiscordResponse = {
     //   campaigns: guilds as unknown[],
