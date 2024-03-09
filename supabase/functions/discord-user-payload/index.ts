@@ -30,9 +30,12 @@ async function discordUserPayload(request: Request) {
   }
 
   try {
-    const guilds = await fetch(Routes.userGuilds(), {
-      headers: { Authorization: `Bearer ${data.discord_token}` },
-    })
+    const guilds = await fetch(
+      `https://discord.com/api${Routes.userGuilds()}`,
+      {
+        headers: { Authorization: `Bearer ${data.discord_token}` },
+      },
+    )
     return json({ guilds })
 
     // const response: DiscordResponse = {
