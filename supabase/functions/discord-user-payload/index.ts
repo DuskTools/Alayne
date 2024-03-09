@@ -15,9 +15,8 @@ type RequestBody = {
 
 type DiscordResponse = {
   campaigns: unknown[]
-  clocks: unknown[]
-  users: unknown[]
 }
+
 async function discordUserPayload(request: Request) {
   const body: RequestBody = JSON.parse(await request.text())
   const { data, error } = await anonClient
@@ -31,19 +30,12 @@ async function discordUserPayload(request: Request) {
     return json(error, { status: 500 })
   }
 
-  if (!data) {
-    return json({ message: "User not found" }, { status: 404 })
-  }
-
-  const discordRest = new REST({ version: "10" }).setToken(data.discord_token)
-
   try {
+    const discordRest = new REST({ version: "10" }).setToken(data.discord_token)
     const guilds = await discordRest.get(Routes.userGuilds())
 
     const response: DiscordResponse = {
       campaigns: guilds as unknown[],
-      clocks: [],
-      users: [],
     }
     return json(response)
   } catch (e) {
