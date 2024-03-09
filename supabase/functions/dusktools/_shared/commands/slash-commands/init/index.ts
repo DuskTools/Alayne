@@ -10,7 +10,8 @@ import CampaignService from "../../../../../_shared/services/CampaignService.ts"
 
 const handleInit = async (interaction: APIApplicationCommandInteraction) => {
   const discord_guild_id = interaction.guild_id!
-  console.log(discord_guild_id)
+  const discord_user_id = interaction.member?.user.id!
+
   const campaign = await CampaignService.findByDiscordGuildId(
     { discord_guild_id },
   )
@@ -36,7 +37,7 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
   const newCampaign = await CampaignService.create({
     discord_guild_id,
     name,
-  })
+  }, { discord_id: discord_user_id! })
 
   const content = `Campaign Created! ${newCampaign.id}`
   return json({

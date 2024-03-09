@@ -1,20 +1,36 @@
 import { adminClient } from "../supabase/index.ts"
-import { Campaign } from "../supabase/types.ts"
+import { Campaign, User } from "../supabase/types.ts"
+import UserService from "./UserService.ts"
 
 const create = async (
   createParams: Campaign["Insert"],
+  userParams: Pick<User["Row"], "discord_id">,
 ): Promise<Campaign["Row"]> => {
-  const { data, error } = await adminClient
+  const { data: campaign, error } = await adminClient
     .from("campaigns")
     .insert(createParams)
     .select()
     .single()
+
   if (error) {
-    console.log("Find or create user error")
-    console.log(error)
+    throw error
   }
 
-  return data!
+  const user = await UserService.findByDiscordId(
+    userParams,
+  )
+
+  const { error: joinError } = await adminClient
+    .from("campaign_user")
+    .insert({ campaign_id: campaign!.id, user_id: user!.id, admin: true })
+    .select()
+    .single()
+
+  if (joinError) {
+    throw joinError
+  }
+
+  return campaign!
 }
 
 const update = async (
@@ -29,8 +45,7 @@ const update = async (
     .single()
 
   if (error) {
-    console.log("Update User Error")
-    console.log(error)
+    throw error
   }
 
   return data!
@@ -47,8 +62,7 @@ const findByDiscordGuildId = async ({
     .eq("discord_guild_id", discord_guild_id)
     .maybeSingle()
   if (error) {
-    console.log("Find User Error")
-    console.log(error)
+    throw error
   }
 
   return data

@@ -11,3 +11,4 @@ type DatabaseTypes<T extends keyof DatabaseTables> = {
 export type Clock = DatabaseTypes<"clocks">
 export type Campaign = DatabaseTypes<"campaigns">
 export type User = DatabaseTypes<"users">
+export type CampaignUser = DatabaseTypes<"campaign_user">
