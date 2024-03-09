@@ -10,10 +10,14 @@ import { adminClient } from "../../../../../_shared/supabase/index.ts"
 const handleInit = async (interaction: APIApplicationCommandInteraction) => {
   const discord_guild_id = interaction.guild_id!
   const discord_user_id = interaction.member?.user.id!
+  const notification_channel =
+    (interaction.data as unknown as { options: [{ value: string }] }).options
+      ?.[0]?.value
 
   const { campaign: newCampaign, error, joinError } = await CampaignService
     .create({
       discord_guild_id,
+      notification_channel,
       name: "TEMP = " + discord_guild_id,
     }, { discord_id: discord_user_id! })
 
@@ -23,7 +27,7 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
       data: {
         content: error?.code === "23505"
           ? "This Server has already been registered!"
-          : "Error creating campaign",
+          : error || "Error creating campaign",
         flags: 1 << 6,
       },
     })

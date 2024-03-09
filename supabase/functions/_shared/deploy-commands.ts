@@ -19,6 +19,12 @@ const roll = new SlashCommandBuilder()
 const init = new SlashCommandBuilder()
   .setName(SlashCommands.init)
   .setDescription("Setup DuskTools in the Server")
+  .addChannelOption((option) =>
+    option
+      .setName("notification_channel")
+      .setDescription("The channel to send notifications to")
+      .setRequired(true)
+  )
 
 const clocks = new SlashCommandBuilder()
   .setName(SlashCommands.Clocks)
