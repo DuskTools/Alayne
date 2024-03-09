@@ -29,7 +29,7 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
     })
   }
 
-  adminClient.functions.invoke("update-campaign-data", {
+  adminClient.functions.invoke("sync-campaign-with-discord", {
     body: { discord_guild_id },
   })
 
