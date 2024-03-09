@@ -1,7 +1,7 @@
 import { json, serve } from "https://deno.land/x/sift@0.6.0/mod.ts"
 
-// import { REST } from "npm:@discordjs/rest"
-// import { Routes } from "npm:discord-api-types/v10"
+import { REST } from "npm:@discordjs/rest"
+import { Routes } from "npm:discord-api-types/v10"
 
 import { anonClient } from "../_shared/supabase/index.ts"
 
@@ -29,19 +29,19 @@ async function discordUserPayload(request: Request) {
     return json(error, { status: 500 })
   }
 
-  return json({ data, typeof: typeof data, token: data.discord_token })
+  try {
+    const guilds = await fetch(Routes.userGuilds(), {
+      headers: { Authorization: `Bearer ${data.discord_token}` },
+    })
+    return json({ guilds })
 
-  // try {
-  //   const discordRest = new REST({ version: "10" }).setToken(data.discord_token)
-  //   const guilds = await discordRest.get(Routes.userGuilds())
-
-  //   const response: DiscordResponse = {
-  //     campaigns: guilds as unknown[],
-  //   }
-  //   return json(response)
-  // } catch (e) {
-  //   return json({ message: `Error fetching user guilds: ${e}` }, {
-  //     status: 500,
-  //   })
-  // }
+    // const response: DiscordResponse = {
+    //   campaigns: guilds as unknown[],
+    // }
+    // return json(response)
+  } catch (e) {
+    return json({ message: `Error fetching user guilds: ${e}` }, {
+      status: 500,
+    })
+  }
 }
