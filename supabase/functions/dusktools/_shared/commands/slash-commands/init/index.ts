@@ -4,9 +4,7 @@ import {
   InteractionResponseType,
 } from "https://deno.land/x/discord_api_types@0.37.71/v10.ts"
 
-import ClockService from "../../../../../_shared/services/ClockService.ts"
 import CampaignService from "../../../../../_shared/services/CampaignService.ts"
-import { buildClockMessageOptions } from "../utils/buildClockMessageOptions.ts"
 
 const handleInit = async (interaction: APIApplicationCommandInteraction) => {
   const discord_guild_id = interaction.guild_id!
