@@ -5,10 +5,10 @@ import { REST } from "npm:@discordjs/rest"
 import { Routes } from "npm:discord-api-types/v10"
 
 serve({
-  "/get-campaign-data": getCampaignData,
+  "/update-campaign-data": updateCampaignData,
 })
 
-async function getCampaignData(request: Request) {
+async function updateCampaignData(request: Request) {
   const { discord_guild_id } = await request.json() as {
     discord_guild_id: string
   }

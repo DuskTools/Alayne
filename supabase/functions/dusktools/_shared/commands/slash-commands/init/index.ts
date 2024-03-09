@@ -21,7 +21,7 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
       type: InteractionResponseType.ChannelMessageWithSource,
       data: {
         content: error?.code === "23505"
-          ? "Guild already Registered"
+          ? "This Server has already been registered!"
           : "Error creating campaign",
         flags: 1 << 6,
       },
