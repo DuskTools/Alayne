@@ -10,24 +10,23 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
   const discord_guild_id = interaction.guild_id!
   const discord_user_id = interaction.member?.user.id!
 
-  // const campaign = await CampaignService.findByDiscordGuildId(
-  //   { discord_guild_id },
-  // )
+  const { campaign: newCampaign, error, joinError } = await CampaignService
+    .create({
+      discord_guild_id,
+      name: "TEMP = " + discord_guild_id,
+    }, { discord_id: discord_user_id! })
 
-  // if (campaign) {
-  //   return json({
-  //     type: InteractionResponseType.ChannelMessageWithSource,
-  //     data: {
-  //       content: "This Campaign has already initialized",
-  //       flags: 1 << 6,
-  //     },
-  //   })
-  // }
-
-  const newCampaign = await CampaignService.create({
-    discord_guild_id,
-    name: "TEMP = " + discord_guild_id,
-  }, { discord_id: discord_user_id! })
+  if (error || joinError) {
+    return json({
+      type: InteractionResponseType.ChannelMessageWithSource,
+      data: {
+        content: error?.code === "23505"
+          ? "Guild already Registered"
+          : "Error creating campaign",
+        flags: 1 << 6,
+      },
+    })
+  }
 
   const content = `Campaign Created! ${newCampaign.id}`
   return json({

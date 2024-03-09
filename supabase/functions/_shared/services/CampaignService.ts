@@ -5,7 +5,7 @@ import UserService from "./UserService.ts"
 const create = async (
   createParams: Campaign["Insert"],
   userParams: Pick<User["Row"], "discord_id">,
-): Promise<Campaign["Row"]> => {
+) => {
   const { data: campaign, error } = await adminClient
     .from("campaigns")
     .insert(createParams)
@@ -13,7 +13,7 @@ const create = async (
     .single()
 
   if (error) {
-    throw error
+    return { error }
   }
 
   const user = await UserService.findByDiscordId(
@@ -27,10 +27,10 @@ const create = async (
     .single()
 
   if (joinError) {
-    throw joinError
+    return { joinError }
   }
 
-  return campaign!
+  return { campaign: campaign! }
 }
 
 const update = async (
