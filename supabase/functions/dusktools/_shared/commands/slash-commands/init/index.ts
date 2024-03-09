@@ -4,6 +4,8 @@ import {
   InteractionResponseType,
 } from "https://deno.land/x/discord_api_types@0.37.71/v10.ts"
 
+import { REST } from "npm:@discordjs/rest"
+import { Routes } from "npm:@discordjs/rest"
 import CampaignService from "../../../../../_shared/services/CampaignService.ts"
 
 const handleInit = async (interaction: APIApplicationCommandInteraction) => {
@@ -23,15 +25,25 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
     })
   }
 
-  console.log(interaction)
-  const content = "Testing"
-  return json({
-    type: InteractionResponseType.ChannelMessageWithSource,
-    data: {
-      content,
-      flags: 1 << 6,
-    },
-  })
+  const discordRest = new REST({ version: "10" }).setToken(
+    Deno.env.get("DISCORD_BOT_TOKEN")!,
+  )
+
+  try {
+    const foo = await discordRest.get(Routes.guild(discord_guild_id))
+
+    console.log(foo)
+    const content = "Testing"
+    return json({
+      type: InteractionResponseType.ChannelMessageWithSource,
+      data: {
+        content,
+        flags: 1 << 6,
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 export default handleInit
