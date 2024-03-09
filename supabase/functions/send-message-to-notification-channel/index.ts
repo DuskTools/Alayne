@@ -31,7 +31,7 @@ async function sendMessageToNotificationChannel(request: Request) {
   await discordRest.post(
     Routes.channelMessages(notification_channel),
     {
-      body: "Hello, World!",
+      body: { content: "Hello, World!" },
     },
   )
 
