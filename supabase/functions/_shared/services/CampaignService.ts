@@ -1,10 +1,10 @@
-import supabase from "../supabase/index.ts"
+import { adminClient } from "../supabase/index.ts"
 import { Campaign } from "../supabase/types.ts"
 
 const create = async (
   createParams: Campaign["Insert"],
 ): Promise<Campaign["Row"]> => {
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from("campaigns")
     .insert(createParams)
     .select()
@@ -21,7 +21,7 @@ const update = async (
   id: Campaign["Row"]["id"],
   updateParams: Campaign["Update"],
 ): Promise<Campaign["Row"]> => {
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from("campaigns")
     .update(updateParams)
     .eq("id", id)
@@ -41,7 +41,7 @@ const findByDiscordGuildId = async ({
 }: Pick<Campaign["Row"], "discord_guild_id">): Promise<
   Campaign["Row"] | null
 > => {
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from("campaigns")
     .select()
     .eq("discord_guild_id", discord_guild_id)

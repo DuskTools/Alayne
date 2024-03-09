@@ -4,8 +4,14 @@ import { Database } from "./database.types.ts"
 
 const URL = Deno.env.get("SUPABASE_URL")!
 const ANON = Deno.env.get("SUPABASE_ANON_KEY")!
+const ADMIN = Deno.env.get("API_PUBLIC_SERVICE_ROLE_KEY")!
 
-export default createClient<Database>(
+export const anonClient = createClient<Database>(
   URL,
   ANON,
+)
+
+export const adminClient = createClient<Database>(
+  URL,
+  ADMIN,
 )
