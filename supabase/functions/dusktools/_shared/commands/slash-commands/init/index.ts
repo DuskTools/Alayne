@@ -5,6 +5,7 @@ import {
 } from "https://deno.land/x/discord_api_types@0.37.71/v10.ts"
 
 import CampaignService from "../../../../../_shared/services/CampaignService.ts"
+import { adminClient } from "../../../../../_shared/supabase/index.ts"
 
 const handleInit = async (interaction: APIApplicationCommandInteraction) => {
   const discord_guild_id = interaction.guild_id!
@@ -27,6 +28,10 @@ const handleInit = async (interaction: APIApplicationCommandInteraction) => {
       },
     })
   }
+
+  adminClient.functions.invoke("update-campaign-data", {
+    body: { discord_guild_id },
+  })
 
   const content = `Campaign Created! ${newCampaign.id}`
   return json({
