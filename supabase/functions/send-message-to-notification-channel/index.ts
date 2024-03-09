@@ -20,7 +20,7 @@ async function sendMessageToNotificationChannel(request: Request) {
 
   const { notification_channel, content } = await request.json() as {
     notification_channel: string
-    content: string
+    content?: string
   }
 
   const discordRest = new REST({ version: "10" }).setToken(
