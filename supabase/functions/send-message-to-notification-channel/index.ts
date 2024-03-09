@@ -7,7 +7,17 @@ serve({
   "/send-message-to-notification-channel": sendMessageToNotificationChannel,
 })
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+}
+
 async function sendMessageToNotificationChannel(request: Request) {
+  if (request.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders })
+  }
+
   console.log("Before")
   const { notification_channel } = await request.json() as {
     notification_channel: string
