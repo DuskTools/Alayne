@@ -8,15 +8,10 @@ import { verifySignature } from "./_shared/utils.ts"
 import {
   APIInteraction,
   InteractionType,
-} from "https://deno.land/x/discord_api_types/v10.ts"
+} from "https://deno.land/x/discord_api_types@0.37.71/v10.ts"
 import handleClocks from "./_shared/commands/slash-commands/clocks/index.ts"
 import { handleRoll } from "./_shared/commands/slash-commands/roll/index.ts"
-
-enum SlashCommands {
-  Clocks = "clocks",
-  Roll = "roll",
-  Register = "register",
-}
+import { SlashCommands } from "../_shared/types.ts"
 
 serve({
   "/dusktools": dusktools,
@@ -52,7 +47,7 @@ async function dusktools(request: Request) {
     switch (rawBody.data.name) {
       case SlashCommands.Clocks:
         return handleClocks(rawBody)
-      case SlashCommands.Register:
+      case SlashCommands.init:
         return handleRoll(rawBody)
       case SlashCommands.Roll:
         return handleRoll(rawBody)

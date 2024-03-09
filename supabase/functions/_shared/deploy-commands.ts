@@ -1,10 +1,11 @@
 import { REST, Routes, SlashCommandBuilder } from "npm:discord.js"
 import { load } from "https://deno.land/std@0.219.0/dotenv/mod.ts"
+import { SlashCommands } from "./types.ts"
 
 const env = await load()
 
 const roll = new SlashCommandBuilder()
-  .setName("roll")
+  .setName(SlashCommands.Roll)
   .setDescription("Roll some dice. Test your luck.")
   .addIntegerOption((option) =>
     option
@@ -16,11 +17,11 @@ const roll = new SlashCommandBuilder()
   )
 
 const init = new SlashCommandBuilder()
-  .setName("init")
+  .setName(SlashCommands.init)
   .setDescription("Setup DuskTools in the Server")
 
 const clocks = new SlashCommandBuilder()
-  .setName("clocks")
+  .setName(SlashCommands.Clocks)
   .setDescription("Show all running clocks")
 
 // const clock = new SlashCommandBuilder()

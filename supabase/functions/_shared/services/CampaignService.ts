@@ -1,42 +1,61 @@
-import { adminClient } from "../supabase/index.ts"
+import supabase from "../supabase/index.ts"
+import { Campaign } from "../supabase/types.ts"
 
-async function findOrCreateByDiscordId(discordGuildId: string) {
-  const existingCampaign = await findByDiscordId(discordGuildId)
-  if (existingCampaign) {
-    return existingCampaign
-  }
-
-  const { data, error } = await adminClient
+const create = async (
+  createParams: Campaign["Insert"],
+): Promise<Campaign["Row"]> => {
+  const { data, error } = await supabase
     .from("campaigns")
-    .insert({ discord_guild_id: discordGuildId })
+    .insert(createParams)
     .select()
     .single()
   if (error) {
-    console.log("Find or create campaign error")
+    console.log("Find or create user error")
     console.log(error)
   }
 
   return data!
 }
 
-async function findByDiscordId(discordGuildId: string) {
-  const { data, error } = await adminClient
+const update = async (
+  id: Campaign["Row"]["id"],
+  updateParams: Campaign["Update"],
+): Promise<Campaign["Row"]> => {
+  const { data, error } = await supabase
     .from("campaigns")
+    .update(updateParams)
+    .eq("id", id)
     .select()
-    .eq("discord_guild_id", discordGuildId)
-    .limit(1)
     .single()
 
   if (error) {
-    console.log("Find campaign error")
-    console.log(error.message)
+    console.log("Update User Error")
+    console.log(error)
   }
 
-  if (!data) {
-    console.log("No Campaign Found for ", discordGuildId)
+  return data!
+}
+
+const findByDiscordGuildId = async ({
+  discord_guild_id,
+}: Pick<Campaign["Row"], "discord_guild_id">): Promise<
+  Campaign["Row"] | null
+> => {
+  const { data, error } = await supabase
+    .from("campaigns")
+    .select()
+    .eq("discord_guild_id", discord_guild_id)
+    .maybeSingle()
+  if (error) {
+    console.log("Find User Error")
+    console.log(error)
   }
 
   return data
 }
 
-export default { findOrCreateByDiscordId }
+export default {
+  findByDiscordGuildId,
+  update,
+  create,
+}
