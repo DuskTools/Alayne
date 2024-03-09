@@ -21,7 +21,7 @@ async function updateCampaignData(request: Request) {
     name: string
   }
 
-  const { error } = await adminClient
+  const { data, error } = await adminClient
     .from("campaigns")
     .update({ name })
     .eq(
@@ -31,5 +31,5 @@ async function updateCampaignData(request: Request) {
 
   if (error) throw error
 
-  return json({ message: "Campaign Updated" }, { status: 200 })
+  return json({ data }, { status: 200 })
 }
