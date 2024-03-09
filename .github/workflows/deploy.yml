@@ -23,3 +23,4 @@ jobs:
 
       - run: supabase functions deploy dusktools --project-ref $PROJECT_ID --no-verify-jwt
       - run: supabase functions deploy sync-campaign-with-discord --project-ref $PROJECT_ID
+      - run: supabase functions deploy send-message-to-notification-channel --project-ref $PROJECT_ID
