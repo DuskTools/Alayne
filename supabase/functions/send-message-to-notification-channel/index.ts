@@ -18,11 +18,10 @@ async function sendMessageToNotificationChannel(request: Request) {
     return new Response("ok", { headers: corsHeaders })
   }
 
-  console.log("Before")
-  const { notification_channel } = await request.json() as {
+  const { notification_channel, content } = await request.json() as {
     notification_channel: string
+    content: string
   }
-  console.log("Notification Channel: " + notification_channel)
 
   const discordRest = new REST({ version: "10" }).setToken(
     Deno.env.get("DISCORD_BOT_TOKEN")!,
@@ -31,7 +30,7 @@ async function sendMessageToNotificationChannel(request: Request) {
   await discordRest.post(
     Routes.channelMessages(notification_channel),
     {
-      body: { content: "Hello, World!" },
+      body: { content: content || "Hello, World!" },
     },
   )
 
