@@ -22,4 +22,3 @@ jobs:
           version: latest
 
       - run: supabase functions deploy dusktools --project-ref $PROJECT_ID --no-verify-jwt
-      - run: supabase functions deploy discord-user-payload --project-ref $PROJECT_ID
