@@ -17,8 +17,18 @@ const roll = new SlashCommandBuilder()
   )
 
 const init = new SlashCommandBuilder()
-  .setName(SlashCommands.init)
+  .setName(SlashCommands.Init)
   .setDescription("Setup DuskTools in the Server")
+  .addChannelOption((option) =>
+    option
+      .setName("notification_channel")
+      .setDescription("The channel to send notifications to")
+      .setRequired(true)
+  )
+
+const notificationChannel = new SlashCommandBuilder()
+  .setName(SlashCommands.NotificationChannel)
+  .setDescription("Register a new Notification Channel")
   .addChannelOption((option) =>
     option
       .setName("notification_channel")
@@ -50,7 +60,9 @@ const clocks = new SlashCommandBuilder()
 //       .setRequired(true)
 //   )
 
-const commands = [roll, clocks, init].map((command) => command.toJSON())
+const commands = [roll, clocks, init, notificationChannel].map((command) =>
+  command.toJSON()
+)
 
 const DISCORD_BOT_TOKEN = env["DISCORD_BOT_TOKEN"]
 const DISCORD_APP_ID = env["DISCORD_APP_ID"]

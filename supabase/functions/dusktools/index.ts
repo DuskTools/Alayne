@@ -13,6 +13,7 @@ import handleClocks from "./_shared/commands/slash-commands/clocks/index.ts"
 import { handleRoll } from "./_shared/commands/slash-commands/roll/index.ts"
 import { SlashCommands } from "../_shared/types.ts"
 import handleInit from "./_shared/commands/slash-commands/init/index.ts"
+import handleNotificationChannel from "./_shared/commands/slash-commands/notificationChannel/index.ts"
 
 serve({
   "/dusktools": dusktools,
@@ -48,8 +49,10 @@ async function dusktools(request: Request) {
     switch (rawBody.data.name) {
       case SlashCommands.Clocks:
         return handleClocks(rawBody)
-      case SlashCommands.init:
+      case SlashCommands.Init:
         return handleInit(rawBody)
+      case SlashCommands.NotificationChannel:
+        return handleNotificationChannel(rawBody)
       case SlashCommands.Roll:
         return handleRoll(rawBody)
     }

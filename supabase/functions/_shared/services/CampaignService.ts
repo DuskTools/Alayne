@@ -34,22 +34,15 @@ const create = async (
 }
 
 const update = async (
-  id: Campaign["Row"]["id"],
+  discord_guild_id: Campaign["Row"]["discord_guild_id"],
   updateParams: Campaign["Update"],
-): Promise<Campaign["Row"]> => {
-  const { data, error } = await adminClient
+) =>
+  await adminClient
     .from("campaigns")
     .update(updateParams)
-    .eq("id", id)
+    .eq("discord_guild_id", discord_guild_id)
     .select()
     .single()
-
-  if (error) {
-    throw error
-  }
-
-  return data!
-}
 
 const findByDiscordGuildId = async ({
   discord_guild_id,
