@@ -26,8 +26,8 @@ const init = new SlashCommandBuilder()
       .setRequired(true)
   )
 
-const notificationChannel = new SlashCommandBuilder()
-  .setName(SlashCommands.NotificationChannel)
+const notifications = new SlashCommandBuilder()
+  .setName(SlashCommands.Notifications)
   .setDescription("Register a new Notification Channel")
   .addChannelOption((option) =>
     option
@@ -40,27 +40,7 @@ const clocks = new SlashCommandBuilder()
   .setName(SlashCommands.Clocks)
   .setDescription("Show all running clocks")
 
-// const clock = new SlashCommandBuilder()
-//   .setName("clock")
-//   .setDescription("Add a running clock")
-//   .addStringOption((option) =>
-//     option
-//       .setName("name")
-//       .setDescription("The name of the clock")
-//       .setRequired(true)
-//   )
-//   .addIntegerOption((option) =>
-//     option
-//       .setName("segments")
-//       .setMinValue(4)
-//       .setMaxValue(12)
-//       .setDescription(
-//         "the maximum number of segments on the clock (4, 6, 8, or 12",
-//       )
-//       .setRequired(true)
-//   )
-
-const commands = [roll, clocks, init, notificationChannel].map((command) =>
+const commands = [roll, clocks, init, notifications].map((command) =>
   command.toJSON()
 )
 
@@ -77,7 +57,6 @@ if (!DISCORD_BOT_TOKEN) {
 const rest = new REST({ version: "10" }).setToken(
   DISCORD_BOT_TOKEN,
 )
-
 rest
   .put(Routes.applicationCommands(DISCORD_APP_ID!), {
     body: commands,
