@@ -54,15 +54,20 @@ const registerUserForCampaign = async (
   userParams: User["Insert"],
 ) => {
   const campaign = await findByDiscordGuildId({ discord_guild_id })
-  const user = await UserService.create(userParams)
 
   if (!campaign) {
     throw { code: CampaignError.NO_CAMPAIGN }
   }
 
+  const user = await UserService.create(userParams)
+
+  if (!user) {
+    throw { code: CampaignError.NO_CAMPAIGN }
+  }
+
   const { error: joinError } = await adminClient
     .from("campaign_user")
-    .insert({ campaign_id: campaign!.id, user_id: user!.id, admin: false })
+    .insert({ campaign_id: campaign.id, user_id: user!.id, admin: false })
     .select()
     .single()
 

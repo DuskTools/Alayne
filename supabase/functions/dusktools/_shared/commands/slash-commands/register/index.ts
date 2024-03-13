@@ -47,6 +47,10 @@ const handleRegister = (interaction: APIApplicationCommandInteraction) => {
           },
         }
       }
+
+      if (error.code === "42501") {
+      }
+
       if (error.code === "23505") {
         return {
           application_id,
