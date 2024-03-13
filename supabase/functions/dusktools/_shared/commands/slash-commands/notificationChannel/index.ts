@@ -30,6 +30,7 @@ const handleNotificationChannel = (
         interaction_token,
         body: {
           content: "Server not initialized. Please run /init first.",
+          flags: 1 << 6,
         },
       }
     }
@@ -40,6 +41,7 @@ const handleNotificationChannel = (
       interaction_token,
       body: {
         content,
+        flags: 1 << 6,
       },
     }
   }, true)
