@@ -9,21 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-commands:
-    runs-on: ubuntu-latest
-
-    env:
-      DISCORD_PUBLIC_KEY: ${{  secrets.DISCORD_PUBLIC_KEY }}
-      DISCORD_BOT_TOKEN: ${{  secrets.DISCORD_BOT_TOKEN }}
-      DISCORD_APP_ID: ${{  secrets.DISCORD_APP_ID }}
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
-      - run: deno task deploy-bot-commands
-
   deploy-to-supabase:
     runs-on: ubuntu-latest
 
