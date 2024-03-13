@@ -47,13 +47,13 @@ const buildEmbed = (
 export function handleRoll(
   interaction: APIApplicationCommandInteraction,
 ) {
-  return deferredResponse(async () => {
+  return deferredResponse(() => {
     const embed = buildEmbed(interaction)
 
-    return await Promise.resolve({
+    return {
       body: { data: { embeds: [embed] } },
       interaction_token: interaction.token,
       application_id: interaction.application_id,
-    })
+    }
   })
 }
