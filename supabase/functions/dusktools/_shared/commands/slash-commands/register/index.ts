@@ -2,7 +2,9 @@ import {
   APIApplicationCommandInteraction,
 } from "https://deno.land/x/discord_api_types@0.37.71/v10.ts"
 
-import CampaignService from "../../../../../_shared/services/CampaignService.ts"
+import CampaignService, {
+  CampaignError,
+} from "../../../../../_shared/services/CampaignService.ts"
 import deferredResponse from "../../../deferredResponse.ts"
 
 const handleRegister = (interaction: APIApplicationCommandInteraction) => {
@@ -30,6 +32,16 @@ const handleRegister = (interaction: APIApplicationCommandInteraction) => {
       }
     } catch (error) {
       console.error(error)
+      if (error.code === CampaignError.NO_CAMPAIGN) {
+        return {
+          application_id,
+          interaction_token,
+          body: {
+            content: "Your DM needs to run `/init` before you can register!",
+            flags: 1 << 6,
+          },
+        }
+      }
       if (error.code === "23505") {
         return {
           application_id,

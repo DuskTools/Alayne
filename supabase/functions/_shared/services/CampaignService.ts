@@ -2,6 +2,11 @@ import { adminClient } from "../supabase/index.ts"
 import { Campaign, User } from "../supabase/types.ts"
 import UserService from "./UserService.ts"
 
+export enum CampaignError {
+  NO_CAMPAIGN,
+  NO_USER,
+}
+
 const create = async (
   createParams: Campaign["Insert"],
   userParams: Pick<User["Row"], "discord_id">,
@@ -46,11 +51,14 @@ const update = async (
 
 const registerUserForCampaign = async (
   discord_guild_id: Campaign["Row"]["discord_guild_id"],
-  userParams: Pick<User["Row"], "discord_id">,
+  userParams: User["Insert"],
 ) => {
   const campaign = await findByDiscordGuildId({ discord_guild_id })
-  const user = await UserService.findByDiscordId(userParams)
-  console.log({ campaign, user })
+  const user = await UserService.create(userParams)
+
+  if (!campaign) {
+    throw { code: CampaignError.NO_CAMPAIGN }
+  }
 
   const { error: joinError } = await adminClient
     .from("campaign_user")
