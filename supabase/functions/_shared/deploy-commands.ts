@@ -48,8 +48,9 @@ const commands = [roll, clocks, init, notifications, register].map((command) =>
   command.toJSON()
 )
 
-const DISCORD_BOT_TOKEN = env["DISCORD_BOT_TOKEN"]
-const DISCORD_APP_ID = env["DISCORD_APP_ID"]
+const DISCORD_BOT_TOKEN = env["DISCORD_BOT_TOKEN"] ||
+  Deno.env.get("DISCORD_BOT_TOKEN")
+const DISCORD_APP_ID = env["DISCORD_APP_ID"] || Deno.env.get("DISCORD_APP_ID")
 
 if (!DISCORD_APP_ID) {
   throw ("DISCORD_APP_ID is not set")
