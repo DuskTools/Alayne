@@ -14,6 +14,7 @@ const handleRegister = (interaction: APIApplicationCommandInteraction) => {
     const discord_guild_id = interaction.guild_id!
     const discord_user_id = interaction.member?.user.id!
     const discordUser = interaction.member?.user
+    console.log(interaction)
 
     try {
       const { user } = await CampaignService
