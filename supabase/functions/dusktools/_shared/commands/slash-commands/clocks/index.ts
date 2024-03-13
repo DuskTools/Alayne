@@ -7,7 +7,7 @@ import CampaignService from "../../../../../_shared/services/CampaignService.ts"
 import { buildClockMessageOptions } from "../utils/buildClockMessageOptions.ts"
 import deferredResponse from "../../../deferredResponse.ts"
 
-const handleClocks = async (interaction: APIApplicationCommandInteraction) => {
+const handleClocks = (interaction: APIApplicationCommandInteraction) => {
   return deferredResponse(async () => {
     const application_id = interaction.application_id
     const interaction_token = interaction.token
