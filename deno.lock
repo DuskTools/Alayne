@@ -3,6 +3,7 @@
   "packages": {
     "specifiers": {
       "npm:@discordjs/builders": "npm:@discordjs/builders@1.7.0",
+      "npm:@types/node": "npm:@types/node@18.16.19",
       "npm:discord-api-types": "npm:discord-api-types@0.37.71",
       "npm:discord.js": "npm:discord.js@14.14.1",
       "npm:dotenv": "npm:dotenv@16.4.5"
@@ -165,6 +166,9 @@
         "dependencies": {}
       }
     }
+  },
+  "redirects": {
+    "https://esm.sh/@supabase/supabase-js@2": "https://esm.sh/@supabase/supabase-js@2.39.8"
   },
   "remote": {
     "https://deno.land/std@0.219.0/dotenv/mod.ts": "0180eaeedaaf88647318811cdaa418cc64dc51fb08354f91f5f480d0a1309f7d",

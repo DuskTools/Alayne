@@ -19,6 +19,10 @@ async function updateDeferredDiscordMessage(request: Request) {
     body: Record<string, unknown>
   }
 
+  console.log(application_id)
+  console.log(interaction_token)
+  console.log(body)
+
   return await discordRest.patch(
     Routes.webhook(application_id, interaction_token),
     { body },
