@@ -49,8 +49,8 @@ export function handleRoll(
 ) {
   return deferredResponse(async () => {
     const embed = buildEmbed(interaction)
+    await new Promise((r) => setTimeout(r, 4000))
     console.log(interaction)
-    await new Promise((r) => setTimeout(r, 2000))
 
     return { data: { embeds: [embed] } }
   })
