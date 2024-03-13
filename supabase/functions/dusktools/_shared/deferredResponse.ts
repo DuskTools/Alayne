@@ -8,12 +8,10 @@ export default (
   privateMessage: boolean = false,
 ) => {
   Promise.resolve(callback()).then((response) => {
-    console.log("Inside Deferred response")
     adminClient.functions.invoke("update-deferred-discord-message", {
       body: { ...response, privateMessage: privateMessage },
     })
   })
-  console.log("Private Message", privateMessage)
 
   return json({
     type: InteractionResponseType.DeferredChannelMessageWithSource,

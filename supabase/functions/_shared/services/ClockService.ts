@@ -9,8 +9,7 @@ async function create(clockParams: Clock["Insert"]) {
     .single()
 
   if (error) {
-    console.log("Create clock error")
-    console.log(error.message)
+    throw error
   }
 
   return data!
@@ -23,8 +22,7 @@ async function getActiveClocks(campaign_id: string) {
     .eq("campaign_id", campaign_id)
 
   if (error) {
-    console.log("get active clocks error")
-    console.log(error.message)
+    throw error
   }
 
   return data!.filter((clock) => clock.progress < clock.segments)
@@ -43,8 +41,7 @@ async function getClock({
     .single()
 
   if (error) {
-    console.log("get clock error")
-    console.log(error.message)
+    throw error
   }
 
   if (!data) {
@@ -70,8 +67,7 @@ async function updateClock(
     .single()
 
   if (error) {
-    console.log("update clock error")
-    console.log(error.message)
+    throw error
   }
 
   return data!

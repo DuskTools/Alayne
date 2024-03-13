@@ -18,11 +18,6 @@ async function updateDeferredDiscordMessage(request: Request) {
     await request
       .json() as DeferredResponseArgs & { privateMessage: boolean }
 
-  console.log(application_id)
-  console.log(interaction_token)
-  console.log(JSON.stringify(body))
-  console.log(privateMessage)
-
   const route = `${
     Routes.webhook(application_id, interaction_token)
   }/messages/@original` as `/${string}`
