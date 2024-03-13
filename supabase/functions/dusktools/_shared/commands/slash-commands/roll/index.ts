@@ -51,7 +51,7 @@ export function handleRoll(
     const embed = buildEmbed(interaction)
 
     return {
-      body: { data: { embeds: [embed] } },
+      body: { embeds: [embed] },
       interaction_token: interaction.token,
       application_id: interaction.application_id,
     }

@@ -29,6 +29,6 @@ async function updateDeferredDiscordMessage(request: Request) {
   console.log(route)
   return await discordRest.patch(
     route,
-    { body: { ...(body["data"] || {}) } },
+    { body },
   )
 }
