@@ -10,7 +10,7 @@ serve({
 
 async function sendMessageToNotificationChannel(request: Request) {
   if (request.method === "OPTIONS") {
-    return corsResponse
+    return corsResponse()
   }
 
   const { notification_channel, content } = await request.json() as {

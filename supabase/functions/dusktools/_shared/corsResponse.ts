@@ -4,4 +4,4 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 }
 
-export default new Response("ok", { headers: corsHeaders })
+export default () => new Response("ok", { headers: corsHeaders })

@@ -11,7 +11,7 @@ serve({
 
 async function syncCampaignWithDiscord(request: Request) {
   if (request.method === "OPTIONS") {
-    return corsResponse
+    return corsResponse()
   }
   const { discord_guild_id } = await request.json() as {
     discord_guild_id: string

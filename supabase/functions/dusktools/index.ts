@@ -51,7 +51,7 @@ async function dusktools(request: Request) {
         return handleClocks(rawBody)
       case SlashCommands.Init:
         return handleInit(rawBody)
-      case SlashCommands.NotificationChannel:
+      case SlashCommands.Notifications:
         return handleNotificationChannel(rawBody)
       case SlashCommands.Roll:
         return handleRoll(rawBody)
