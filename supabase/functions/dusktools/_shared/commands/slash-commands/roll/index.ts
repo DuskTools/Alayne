@@ -11,6 +11,7 @@ import {
   APIApplicationCommandInteraction,
   InteractionResponseType,
 } from "https://deno.land/x/discord_api_types@0.37.71/v10.ts"
+import deferredResponse from "../../../deferredResponse.ts"
 
 const buildEmbed = (
   interaction: APIApplicationCommandInteraction,
@@ -48,10 +49,13 @@ const buildEmbed = (
 export function handleRoll(
   interaction: APIApplicationCommandInteraction,
 ) {
-  console.log(JSON.stringify(interaction))
-  // const embed = buildEmbed(interaction)
-
-  return json({
-    type: InteractionResponseType.DeferredChannelMessageWithSource,
+  return deferredResponse(() => {
+    const embed = buildEmbed(interaction)
+    console.log(embed)
   })
+
+  // return json({
+  //   type: InteractionResponseType.DeferredChannelMessageWithSource,
+  //   data: { embeds: [embed] },
+  // })
 }
