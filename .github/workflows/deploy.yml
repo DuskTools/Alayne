@@ -1,9 +1,11 @@
 name: Deploy Function
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    branches: [main]
+    workflows: ["CI"]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
