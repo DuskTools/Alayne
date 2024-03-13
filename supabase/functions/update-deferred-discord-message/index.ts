@@ -23,7 +23,10 @@ async function updateDeferredDiscordMessage(request: Request) {
   console.log(interaction_token)
   console.log(body)
 
-  const route = `${Routes.webhook(application_id, interaction_token)}/@original`
+  const route = `${
+    Routes.webhook(application_id, interaction_token)
+  }/messages/@original`
+  console.log(route)
   return await discordRest.patch(
     route,
     { body },
