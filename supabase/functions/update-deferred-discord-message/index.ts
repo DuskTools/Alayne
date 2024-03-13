@@ -14,12 +14,14 @@ async function updateDeferredDiscordMessage(request: Request) {
     return corsResponse()
   }
 
-  const { application_id, interaction_token, body } = await request
-    .json() as DeferredResponseArgs
+  const { application_id, interaction_token, body, privateMessage } =
+    await request
+      .json() as DeferredResponseArgs & { privateMessage: boolean }
 
   console.log(application_id)
   console.log(interaction_token)
   console.log(JSON.stringify(body))
+  console.log(privateMessage)
 
   const route = `${
     Routes.webhook(application_id, interaction_token)
@@ -27,7 +29,7 @@ async function updateDeferredDiscordMessage(request: Request) {
 
   await discordRest.patch(
     route,
-    { body },
+    { body: { ...body, flags: privateMessage ? 1 << 6 : undefined } },
   )
 
   return new Response("ok", { status: 200 })

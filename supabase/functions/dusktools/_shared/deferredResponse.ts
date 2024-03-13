@@ -10,7 +10,7 @@ export default (
   Promise.resolve(callback()).then((response) => {
     console.log("Inside Deferred response")
     adminClient.functions.invoke("update-deferred-discord-message", {
-      body: response,
+      body: { ...response, privateMessage: privateMessage },
     })
   })
 

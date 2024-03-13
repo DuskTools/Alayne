@@ -5,7 +5,7 @@ import {
 import CampaignService from "../../../../../_shared/services/CampaignService.ts"
 import deferredResponse from "../../../deferredResponse.ts"
 
-const handleNotificationChannel = async (
+const handleNotificationChannel = (
   interaction: APIApplicationCommandInteraction,
 ) => {
   return deferredResponse(async () => {
