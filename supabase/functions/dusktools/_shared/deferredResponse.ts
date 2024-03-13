@@ -13,6 +13,7 @@ export default (
       body: { ...response, privateMessage: privateMessage },
     })
   })
+  console.log("Private Message", privateMessage)
 
   return json({
     type: InteractionResponseType.DeferredChannelMessageWithSource,
