@@ -50,8 +50,8 @@ export function handleRoll(
   interaction: APIApplicationCommandInteraction,
 ) {
   return deferredResponse(() => {
-    const embed = buildEmbed(interaction)
-    console.log(embed)
+    const _embed = buildEmbed(interaction)
+    console.log(interaction)
   })
 
   // return json({
