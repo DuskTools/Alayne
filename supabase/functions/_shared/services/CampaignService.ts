@@ -50,6 +50,7 @@ const registerUserForCampaign = async (
 ) => {
   const campaign = await findByDiscordGuildId({ discord_guild_id })
   const user = await UserService.findByDiscordId(userParams)
+  console.log({ campaign, user })
 
   const { error: joinError } = await adminClient
     .from("campaign_user")
