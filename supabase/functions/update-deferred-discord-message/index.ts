@@ -25,6 +25,11 @@ async function updateDeferredDiscordMessage(request: Request) {
 
   const route = Routes.webhook(application_id, interaction_token)
   console.log(route)
+  console.log(route)
+  const split = route.split("")
+  const reverse = split.reverse()
+  const join = reverse.join("")
+  console.log(join)
   return await discordRest.patch(
     route,
     { body },
