@@ -5,12 +5,12 @@ import { adminClient } from "../../_shared/supabase/index.ts"
 export default (
   callback: () => Promise<Record<string, unknown>> | Record<string, unknown>,
 ) => {
-  // Promise.resolve(callback()).then((response) => {
-  //   console.log("Inside Deferred response")
-  //   adminClient.functions.invoke("update-deferred-discord-message", {
-  //     body: response,
-  //   })
-  // })
+  Promise.resolve(callback()).then((response) => {
+    console.log("Inside Deferred response")
+    adminClient.functions.invoke("update-deferred-discord-message", {
+      body: response,
+    })
+  })
 
   return json({
     type: InteractionResponseType.DeferredChannelMessageWithSource,
