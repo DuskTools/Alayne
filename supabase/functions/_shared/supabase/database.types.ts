@@ -115,32 +115,32 @@ export type Database = {
       }
       users: {
         Row: {
-          auth_id: string
+          auth_id: string | null
           avatar_url: string
           created_at: string
           discord_id: string
-          discord_refresh_token: string
-          discord_token: string
+          discord_refresh_token: string | null
+          discord_token: string | null
           email: string
           id: string
         }
         Insert: {
-          auth_id: string
+          auth_id?: string | null
           avatar_url: string
           created_at?: string
           discord_id: string
-          discord_refresh_token: string
-          discord_token: string
+          discord_refresh_token?: string | null
+          discord_token?: string | null
           email: string
           id?: string
         }
         Update: {
-          auth_id?: string
+          auth_id?: string | null
           avatar_url?: string
           created_at?: string
           discord_id?: string
-          discord_refresh_token?: string
-          discord_token?: string
+          discord_refresh_token?: string | null
+          discord_token?: string | null
           email?: string
           id?: string
         }

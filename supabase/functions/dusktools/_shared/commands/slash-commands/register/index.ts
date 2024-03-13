@@ -13,12 +13,17 @@ const handleRegister = (interaction: APIApplicationCommandInteraction) => {
     const interaction_token = interaction.token
     const discord_guild_id = interaction.guild_id!
     const discord_user_id = interaction.member?.user.id!
+    const discordUser = interaction.member?.user
 
     try {
       const { user } = await CampaignService
         .registerUserForCampaign(
           discord_guild_id,
-          { discord_id: discord_user_id! },
+          {
+            discord_id: discord_user_id!,
+            avatar_url: discordUser?.avatar!,
+            email: discordUser?.email!,
+          },
         )
 
       const content = `User registered with this campaign! ${user!.id}`
