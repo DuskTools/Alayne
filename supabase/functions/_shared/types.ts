@@ -3,4 +3,5 @@ export enum SlashCommands {
   Roll = "roll",
   Init = "init",
   Notifications = "notifications",
+  Register = "register",
 }

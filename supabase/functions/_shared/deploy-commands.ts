@@ -26,6 +26,10 @@ const init = new SlashCommandBuilder()
       .setRequired(true)
   )
 
+const register = new SlashCommandBuilder()
+  .setName(SlashCommands.Register)
+  .setDescription("Register yourself with DuskTools")
+
 const notifications = new SlashCommandBuilder()
   .setName(SlashCommands.Notifications)
   .setDescription("Register a new Notification Channel")
@@ -40,7 +44,7 @@ const clocks = new SlashCommandBuilder()
   .setName(SlashCommands.Clocks)
   .setDescription("Show all running clocks")
 
-const commands = [roll, clocks, init, notifications].map((command) =>
+const commands = [roll, clocks, init, notifications, register].map((command) =>
   command.toJSON()
 )
 

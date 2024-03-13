@@ -9,7 +9,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  deploy-commands:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - run: deno tasks deploy-bot-commands
+  deploy-to-supabase:
     runs-on: ubuntu-latest
 
     env:

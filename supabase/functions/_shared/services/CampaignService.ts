@@ -44,6 +44,25 @@ const update = async (
     .select()
     .single()
 
+const registerUserForCampaign = async (
+  discord_guild_id: Campaign["Row"]["discord_guild_id"],
+  userParams: Pick<User["Row"], "discord_id">,
+) => {
+  const campaign = await findByDiscordGuildId({ discord_guild_id })
+  const user = await UserService.findByDiscordId(userParams)
+
+  const { error: joinError } = await adminClient
+    .from("campaign_user")
+    .insert({ campaign_id: campaign!.id, user_id: user!.id, admin: false })
+    .select()
+    .single()
+
+  if (joinError) {
+    throw joinError
+  }
+  return { user }
+}
+
 const findByDiscordGuildId = async ({
   discord_guild_id,
 }: Pick<Campaign["Row"], "discord_guild_id">): Promise<
@@ -62,6 +81,7 @@ const findByDiscordGuildId = async ({
 }
 
 export default {
+  registerUserForCampaign,
   findByDiscordGuildId,
   update,
   create,

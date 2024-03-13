@@ -49,6 +49,8 @@ async function dusktools(request: Request) {
     switch (rawBody.data.name) {
       case SlashCommands.Clocks:
         return handleClocks(rawBody)
+      case SlashCommands.Register:
+        return handleInit(rawBody)
       case SlashCommands.Init:
         return handleInit(rawBody)
       case SlashCommands.Notifications:
