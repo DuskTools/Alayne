@@ -48,10 +48,10 @@ const buildEmbed = (
 export function handleRoll(
   interaction: APIApplicationCommandInteraction,
 ) {
-  const embed = buildEmbed(interaction)
+  console.log(JSON.stringify(interaction))
+  // const embed = buildEmbed(interaction)
 
   return json({
-    type: InteractionResponseType.ChannelMessageWithSource,
-    data: { embeds: [embed] },
+    type: InteractionResponseType.DeferredChannelMessageWithSource,
   })
 }
