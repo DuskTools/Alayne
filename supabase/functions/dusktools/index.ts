@@ -14,6 +14,7 @@ import { handleRoll } from "./_shared/commands/slash-commands/roll/index.ts"
 import { SlashCommands } from "../_shared/types.ts"
 import handleInit from "./_shared/commands/slash-commands/init/index.ts"
 import handleNotificationChannel from "./_shared/commands/slash-commands/notificationChannel/index.ts"
+import handleRegister from "./_shared/commands/slash-commands/regiser/index.ts"
 
 serve({
   "/dusktools": dusktools,
@@ -50,7 +51,7 @@ async function dusktools(request: Request) {
       case SlashCommands.Clocks:
         return handleClocks(rawBody)
       case SlashCommands.Register:
-        return handleInit(rawBody)
+        return handleRegister(rawBody)
       case SlashCommands.Init:
         return handleInit(rawBody)
       case SlashCommands.Notifications:
