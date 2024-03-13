@@ -12,20 +12,44 @@ const handleRegister = (interaction: APIApplicationCommandInteraction) => {
     const discord_guild_id = interaction.guild_id!
     const discord_user_id = interaction.member?.user.id!
 
-    const { user } = await CampaignService
-      .registerUserForCampaign(
-        discord_guild_id,
-        { discord_id: discord_user_id! },
-      )
+    try {
+      const { user } = await CampaignService
+        .registerUserForCampaign(
+          discord_guild_id,
+          { discord_id: discord_user_id! },
+        )
 
-    const content = `User registered with this campaign! ${user!.id}`
-    return {
-      application_id,
-      interaction_token,
-      body: {
-        content,
-        flags: 1 << 6,
-      },
+      const content = `User registered with this campaign! ${user!.id}`
+      return {
+        application_id,
+        interaction_token,
+        body: {
+          content,
+          flags: 1 << 6,
+        },
+      }
+    } catch (error) {
+      console.error(error)
+      if (error.code === "23505") {
+        return {
+          application_id,
+          interaction_token,
+          body: {
+            content: "You are already registered with this campaign!",
+            flags: 1 << 6,
+          },
+        }
+      }
+
+      return {
+        application_id,
+        interaction_token,
+        body: {
+          content:
+            "There was an error registering this user. Please try again.",
+          flags: 1 << 6,
+        },
+      }
     }
   }, true)
 }
