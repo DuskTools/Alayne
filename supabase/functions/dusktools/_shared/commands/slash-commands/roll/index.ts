@@ -6,10 +6,8 @@ import { getThumbnail } from "./getThumbail.ts"
 import { getBladesRollType } from "./getBladesRollType.ts"
 import { getSuccessString } from "./getSuccessString.ts"
 import { generateRollResult } from "./generateRollResult.ts"
-import { json } from "https://deno.land/x/sift@0.6.0/mod.ts"
 import {
   APIApplicationCommandInteraction,
-  InteractionResponseType,
 } from "https://deno.land/x/discord_api_types@0.37.71/v10.ts"
 import deferredResponse from "../../../deferredResponse.ts"
 
@@ -50,12 +48,8 @@ export function handleRoll(
   interaction: APIApplicationCommandInteraction,
 ) {
   return deferredResponse(() => {
-    const _embed = buildEmbed(interaction)
+    const embed = buildEmbed(interaction)
     console.log(interaction)
+    return { data: { embeds: [embed] } }
   })
-
-  // return json({
-  //   type: InteractionResponseType.DeferredChannelMessageWithSource,
-  //   data: { embeds: [embed] },
-  // })
 }
