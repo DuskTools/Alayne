@@ -5,6 +5,7 @@ import { DeferredResponseArgs } from "./types.ts"
 
 export default (
   callback: () => Promise<DeferredResponseArgs> | DeferredResponseArgs,
+  privateMessage: boolean = false,
 ) => {
   Promise.resolve(callback()).then((response) => {
     console.log("Inside Deferred response")
@@ -15,5 +16,6 @@ export default (
 
   return json({
     type: InteractionResponseType.DeferredChannelMessageWithSource,
+    flags: privateMessage ? 1 << 6 : undefined,
   })
 }
