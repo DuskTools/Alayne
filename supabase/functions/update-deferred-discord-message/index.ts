@@ -3,6 +3,7 @@ import { serve } from "https://deno.land/x/sift@0.6.0/mod.ts"
 import { Routes } from "npm:discord-api-types/v10"
 import discordRest from "../dusktools/_shared/discordRest.ts"
 import corsResponse from "../dusktools/_shared/corsResponse.ts"
+import { DeferredResponseArgs } from "../dusktools/_shared/types.ts"
 
 serve({
   "/update-deferred-discord-message": updateDeferredDiscordMessage,
@@ -13,11 +14,8 @@ async function updateDeferredDiscordMessage(request: Request) {
     return corsResponse()
   }
 
-  const { application_id, interaction_token, body } = await request.json() as {
-    application_id: string
-    interaction_token: string
-    body: Record<string, unknown>
-  }
+  const { application_id, interaction_token, body } = await request
+    .json() as DeferredResponseArgs
 
   console.log(application_id)
   console.log(interaction_token)
@@ -25,10 +23,12 @@ async function updateDeferredDiscordMessage(request: Request) {
 
   const route = `${
     Routes.webhook(application_id, interaction_token)
-  }/messages/@original`
-  console.log(route)
-  return await discordRest.patch(
+  }/messages/@original` as `/${string}`
+
+  await discordRest.patch(
     route,
     { body },
   )
+
+  return new Response("ok", { status: 200 })
 }
