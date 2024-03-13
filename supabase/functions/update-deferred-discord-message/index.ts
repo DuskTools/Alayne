@@ -21,7 +21,7 @@ async function updateDeferredDiscordMessage(request: Request) {
 
   console.log(application_id)
   console.log(interaction_token)
-  console.log(body)
+  console.log(JSON.stringify(body))
 
   const route = `${
     Routes.webhook(application_id, interaction_token)
