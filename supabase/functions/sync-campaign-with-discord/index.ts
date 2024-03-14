@@ -3,7 +3,7 @@ import { adminClient } from "../_shared/supabase/index.ts"
 
 import { Routes } from "npm:discord-api-types/v10"
 import discordRest from "../dusktools/_shared/discordRest.ts"
-import corsResponse from "../dusktools/_shared/corsResponse.ts"
+import corsResponse, { corsHeaders } from "../dusktools/_shared/corsResponse.ts"
 
 serve({
   "/sync-campaign-with-discord": syncCampaignWithDiscord,
@@ -33,5 +33,5 @@ async function syncCampaignWithDiscord(request: Request) {
 
   if (error) throw error
 
-  return json({ data }, { status: 200 })
+  return json({ data }, { status: 200, headers: corsHeaders })
 }

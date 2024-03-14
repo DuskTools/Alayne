@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/x/sift@0.6.0/mod.ts"
 
 import { Routes } from "npm:discord-api-types/v10"
 import discordRest from "../dusktools/_shared/discordRest.ts"
-import corsResponse from "../dusktools/_shared/corsResponse.ts"
+import corsResponse, { corsHeaders } from "../dusktools/_shared/corsResponse.ts"
 import { DeferredResponseArgs } from "../dusktools/_shared/types.ts"
 
 serve({
@@ -27,5 +27,5 @@ async function updateDeferredDiscordMessage(request: Request) {
     { body: { ...body, flags: privateMessage ? 1 << 6 : undefined } },
   )
 
-  return new Response("ok", { status: 200 })
+  return new Response("ok", { status: 200, headers: corsHeaders })
 }
