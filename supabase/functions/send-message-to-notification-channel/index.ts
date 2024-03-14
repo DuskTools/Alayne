@@ -2,7 +2,7 @@ import { json, serve } from "https://deno.land/x/sift@0.6.0/mod.ts"
 
 import { Routes } from "npm:discord-api-types/v10"
 import discordRest from "../dusktools/_shared/discordRest.ts"
-import corsResponse from "../dusktools/_shared/corsResponse.ts"
+import corsResponse, { corsHeaders } from "../dusktools/_shared/corsResponse.ts"
 
 serve({
   "/send-message-to-notification-channel": sendMessageToNotificationChannel,
@@ -27,5 +27,5 @@ async function sendMessageToNotificationChannel(request: Request) {
     },
   )
 
-  return json({ content: "ok" }, { status: 200 })
+  return json({ content: "ok" }, { status: 200, headers: corsHeaders })
 }
