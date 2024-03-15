@@ -12,8 +12,8 @@ const handleInit = (interaction: APIApplicationCommandInteraction) => {
     const interaction_token = interaction.token
     const discord_guild_id = interaction.guild_id!
     const discord_user_id = interaction.member?.user.id!
-    const nickname = interaction.member?.nick ||
-      interaction.member?.user?.global_name || "Mysery User"
+    const nickname = interaction.member?.nick
+    const globalName = interaction.member?.user?.global_name || "Mysery User"
 
     const notification_channel =
       (interaction.data as unknown as { options: [{ value: string }] }).options
@@ -26,7 +26,7 @@ const handleInit = (interaction: APIApplicationCommandInteraction) => {
           notification_channel,
           name: "TEMP = " + discord_guild_id,
         },
-        { discord_id: discord_user_id! },
+        { discord_id: discord_user_id!, discord_global_name: globalName },
         nickname,
       )
 

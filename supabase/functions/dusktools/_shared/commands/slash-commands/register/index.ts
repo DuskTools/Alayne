@@ -14,8 +14,8 @@ const handleRegister = (interaction: APIApplicationCommandInteraction) => {
     const discord_guild_id = interaction.guild_id!
     const discord_user_id = interaction.member?.user.id!
     const discordUser = interaction.member?.user
-    const nickname = interaction.member?.nick ||
-      interaction.member?.user?.global_name || "Mysery User"
+    const nickname = interaction.member?.nick
+    const globalName = interaction.member?.user?.global_name || "Mysery User"
 
     try {
       const { user } = await CampaignService
@@ -25,6 +25,7 @@ const handleRegister = (interaction: APIApplicationCommandInteraction) => {
             discord_id: discord_user_id!,
             avatar_url: discordUser?.avatar!,
             email: discordUser?.email!,
+            discord_global_name: globalName,
           },
           nickname,
         )

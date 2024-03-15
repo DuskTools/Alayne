@@ -9,8 +9,8 @@ export enum CampaignError {
 
 const create = async (
   createParams: Campaign["Insert"],
-  userParams: Pick<User["Row"], "discord_id">,
-  nickname: string,
+  userParams: Pick<User["Row"], "discord_id" | "discord_global_name">,
+  nickname: string | undefined | null,
 ) => {
   const { data: campaign, error } = await adminClient
     .from("campaigns")
@@ -58,7 +58,7 @@ const update = async (
 const registerUserForCampaign = async (
   discord_guild_id: Campaign["Row"]["discord_guild_id"],
   userParams: User["Insert"],
-  nickname: string,
+  nickname: string | undefined | null,
 ) => {
   const campaign = await findByDiscordGuildId({ discord_guild_id })
 
