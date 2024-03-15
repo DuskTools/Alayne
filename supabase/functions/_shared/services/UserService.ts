@@ -47,7 +47,17 @@ const findByDiscordId = async ({
   return data
 }
 
+const createOrUpdate = async (userParams: User["Insert"]) => {
+  const user = await findByDiscordId(userParams)
+  if (user) {
+    return update(user.id, userParams)
+  }
+
+  return create(userParams)
+}
+
 export default {
+  createOrUpdate,
   findByDiscordId,
   create,
   update,

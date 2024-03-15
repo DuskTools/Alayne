@@ -22,7 +22,7 @@ const create = async (
     return { error }
   }
 
-  const user = await UserService.findByDiscordId(
+  const user = await UserService.createOrUpdate(
     userParams,
   )
 
@@ -66,7 +66,7 @@ const registerUserForCampaign = async (
     throw { code: CampaignError.NO_CAMPAIGN }
   }
 
-  const user = await UserService.create(userParams)
+  const user = await UserService.createOrUpdate(userParams)
 
   if (!user) {
     throw { code: CampaignError.NO_CAMPAIGN }
