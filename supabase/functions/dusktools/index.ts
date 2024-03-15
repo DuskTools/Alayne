@@ -47,6 +47,7 @@ async function dusktools(request: Request) {
   }
 
   if (rawBody.type === InteractionType.ApplicationCommand) {
+    console.log(rawBody)
     switch (rawBody.data.name) {
       case SlashCommands.Clocks:
         return handleClocks(rawBody)

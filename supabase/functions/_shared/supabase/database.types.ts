@@ -11,24 +11,27 @@ export type Database = {
     Tables: {
       campaign_user: {
         Row: {
-          admin: boolean | null
+          admin: boolean
           campaign_id: string
           created_at: string
           id: number
+          nickname: string
           user_id: string
         }
         Insert: {
-          admin?: boolean | null
+          admin?: boolean
           campaign_id: string
           created_at?: string
           id?: number
+          nickname?: string
           user_id: string
         }
         Update: {
-          admin?: boolean | null
+          admin?: boolean
           campaign_id?: string
           created_at?: string
           id?: number
+          nickname?: string
           user_id?: string
         }
         Relationships: [
@@ -74,6 +77,7 @@ export type Database = {
       }
       clocks: {
         Row: {
+          active: boolean
           campaign_id: string
           created_at: string
           id: string
@@ -84,6 +88,7 @@ export type Database = {
           segments: number
         }
         Insert: {
+          active?: boolean
           campaign_id?: string
           created_at?: string
           id?: string
@@ -94,6 +99,7 @@ export type Database = {
           segments: number
         }
         Update: {
+          active?: boolean
           campaign_id?: string
           created_at?: string
           id?: string
@@ -116,32 +122,32 @@ export type Database = {
       users: {
         Row: {
           auth_id: string | null
-          avatar_url: string
+          avatar_url: string | null
           created_at: string
           discord_id: string
           discord_refresh_token: string | null
           discord_token: string | null
-          email: string
+          email: string | null
           id: string
         }
         Insert: {
           auth_id?: string | null
-          avatar_url: string
+          avatar_url?: string | null
           created_at?: string
           discord_id: string
           discord_refresh_token?: string | null
           discord_token?: string | null
-          email: string
+          email?: string | null
           id?: string
         }
         Update: {
           auth_id?: string | null
-          avatar_url?: string
+          avatar_url?: string | null
           created_at?: string
           discord_id?: string
           discord_refresh_token?: string | null
           discord_token?: string | null
-          email?: string
+          email?: string | null
           id?: string
         }
         Relationships: [

@@ -17,11 +17,15 @@ const handleInit = (interaction: APIApplicationCommandInteraction) => {
         ?.[0]?.value
 
     const { campaign: newCampaign, error, joinError } = await CampaignService
-      .create({
-        discord_guild_id,
-        notification_channel,
-        name: "TEMP = " + discord_guild_id,
-      }, { discord_id: discord_user_id! })
+      .create(
+        {
+          discord_guild_id,
+          notification_channel,
+          name: "TEMP = " + discord_guild_id,
+        },
+        { discord_id: discord_user_id! },
+        "Nickname",
+      )
 
     if (error || joinError) {
       return {

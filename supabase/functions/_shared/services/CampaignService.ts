@@ -10,6 +10,7 @@ export enum CampaignError {
 const create = async (
   createParams: Campaign["Insert"],
   userParams: Pick<User["Row"], "discord_id">,
+  nickname: string,
 ) => {
   const { data: campaign, error } = await adminClient
     .from("campaigns")
@@ -27,7 +28,12 @@ const create = async (
 
   const { error: joinError } = await adminClient
     .from("campaign_user")
-    .insert({ campaign_id: campaign!.id, user_id: user!.id, admin: true })
+    .insert({
+      campaign_id: campaign!.id,
+      user_id: user!.id,
+      admin: true,
+      nickname,
+    })
     .select()
     .single()
 
@@ -52,6 +58,7 @@ const update = async (
 const registerUserForCampaign = async (
   discord_guild_id: Campaign["Row"]["discord_guild_id"],
   userParams: User["Insert"],
+  nickname: string,
 ) => {
   const campaign = await findByDiscordGuildId({ discord_guild_id })
 
@@ -67,7 +74,12 @@ const registerUserForCampaign = async (
 
   const { error: joinError } = await adminClient
     .from("campaign_user")
-    .insert({ campaign_id: campaign.id, user_id: user!.id, admin: false })
+    .insert({
+      campaign_id: campaign.id,
+      user_id: user!.id,
+      admin: false,
+      nickname,
+    })
     .select()
     .single()
 
