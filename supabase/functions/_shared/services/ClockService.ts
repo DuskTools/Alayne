@@ -20,12 +20,13 @@ async function getActiveClocks(campaign_id: string) {
     .from("clocks")
     .select()
     .eq("campaign_id", campaign_id)
+    .eq("active", true)
 
   if (error) {
     throw error
   }
 
-  return data!.filter((clock) => clock.progress < clock.segments)
+  return data
 }
 
 async function getClock({
