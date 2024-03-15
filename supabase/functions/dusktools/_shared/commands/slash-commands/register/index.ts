@@ -26,6 +26,7 @@ const handleRegister = (interaction: APIApplicationCommandInteraction) => {
             avatar_url: discordUser?.avatar!,
             email: discordUser?.email!,
           },
+          nickname,
         )
 
       const content = `User registered with this campaign! ${user!.id}`
